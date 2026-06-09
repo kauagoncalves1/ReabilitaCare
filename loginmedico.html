@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Médico – ReabilitaCare</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url("../assets/images/imagemfundo.jpeg") no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed;
+      padding-top: 120px;
+      padding-bottom: 40px;
+    }
+
+    /* ===========================
+         HEADER
+      =========================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      animation: slideDown 0.8s ease;
+    }
+
+    .top-header {
+      padding: 2px 0;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .top-header .interface {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .interface {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 0 4%;
+    }
+
+    .logotipo img {
+      width: 90px;
+      transition: 0.3s;
+    }
+
+    .logotipo img:hover {
+      transform: scale(1.08) rotate(-2deg);
+    }
+
+    .btn-social a {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 32px;
+      height: 32px;
+      margin-left: 10px;
+      border-radius: 50%;
+      border: 1.5px solid #016366;
+      color: #016366;
+      font-size: 16px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn-social a:hover {
+      background: #00bfff;
+      color: #fff;
+      border-color: #00bfff;
+      transform: translateY(-3px);
+    }
+
+    .bottom-header {
+      background: rgba(1, 99, 102, 0.6);
+      backdrop-filter: blur(50px);
+      -webkit-backdrop-filter: blur(50px);
+      padding-bottom: 0;
+    }
+
+    .bottom-header nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+    }
+
+    .bottom-header nav ul li {
+      position: relative;
+    }
+
+    .bottom-header nav ul li a {
+      display: block;
+      padding: 14px 22px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      transition: 0.3s;
+    }
+
+    .bottom-header nav ul li a:hover {
+      background: #00bfff;
+      transform: translateY(-2px);
+    }
+
+    .area-usuario {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .area-usuario a {
+      padding: 7px 18px;
+      background: #016366;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    .area-usuario a:hover {
+      background: #00bfff;
+      transform: translateY(-2px);
+    }
+
+    /* ===========================
+         MAIN
+      =========================== */
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      width: 100%;
+    }
+
+    /* ===========================
+         CARD LOGIN
+      =========================== */
+    .login-medico {
+      width: 560px;
+      padding: 44px 40px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+      animation: fadeUp 0.8s ease;
+      transition: transform 0.3s;
+    }
+
+    .login-medico:hover {
+      transform: translateY(-4px);
+    }
+
+    .badge-medico {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(0, 191, 255, 0.15);
+      border: 1px solid rgba(0, 191, 255, 0.5);
+      color: #00bfff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 30px;
+      width: fit-content;
+      margin: 0 auto 20px;
+    }
+
+    .login-medico h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #016366;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .login-sub {
+      text-align: center;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .login-sub span {
+      color: #016366;
+      font-weight: 700;
+    }
+
+    .divisor-card {
+      height: 1px;
+      background: rgba(1, 99, 102, 0.12);
+      margin-bottom: 28px;
+      border-radius: 2px;
+    }
+
+    /* ===========================
+         CAMPOS
+      =========================== */
+    .import-group {
+      margin-bottom: 18px;
+    }
+
+    .import-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.85rem;
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: 700;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrap i {
+      position: absolute;
+      left: 14px;
+      color: #016366;
+      font-size: 1rem;
+      opacity: 0.6;
+    }
+
+    .input-wrap input,
+    .input-wrap select {
+      width: 100%;
+      padding: 12px 14px 12px 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.18);
+      color: rgba(0, 0, 0, 0.78);
+      font-size: 0.95rem;
+      transition: 0.3s;
+      font-family: "Nunito", sans-serif;
+    }
+
+    .input-wrap select {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .input-wrap input::placeholder {
+      color: rgba(0, 0, 0, 0.35);
+    }
+
+    .input-wrap input:focus,
+    .input-wrap select:focus {
+      outline: none;
+      border-color: #00bfff;
+      box-shadow: 0 0 10px rgba(0, 191, 255, 0.4);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .input-wrap input.input-erro,
+    .input-wrap select.input-erro {
+      border-color: #ff6b6b;
+      box-shadow: 0 0 8px rgba(255, 107, 107, 0.4);
+    }
+
+    .input-wrap input.input-sucesso {
+      border-color: #51cf66;
+      box-shadow: 0 0 8px rgba(81, 207, 102, 0.4);
+    }
+
+    .toggle-senha {
+      position: absolute;
+      right: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #016366;
+      font-size: 1rem;
+      opacity: 0.6;
+      transition: 0.2s;
+      padding: 0;
+    }
+
+    .toggle-senha:hover { opacity: 1; }
+
+    .linha {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      accent-color: #016366;
+      cursor: pointer;
+    }
+
+    .link {
+      font-size: 0.88rem;
+      color: #00bfff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.2s;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+      color: #016366;
+    }
+
+    /* ===========================
+         BOTÕES
+      =========================== */
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      margin-top: 14px;
+      border: none;
+      background: linear-gradient(45deg, #016366, #00bfff);
+      color: white;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      transition: 0.3s;
+      box-shadow: 0 6px 24px rgba(0, 191, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: "Nunito", sans-serif;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(0, 191, 255, 0.5);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-outline {
+      width: 100%;
+      padding: 13px;
+      margin-top: 10px;
+      border: 1.5px solid #016366;
+      background: transparent;
+      color: #016366;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: "Nunito", sans-serif;
+    }
+
+    .btn-outline:hover {
+      background: rgba(1, 99, 102, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* ===========================
+         ALERTA
+      =========================== */
+    .alerta {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 12px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alerta.erro {
+      display: flex;
+      background: rgba(255, 107, 107, 0.15);
+      color: #c62828;
+      border: 1px solid rgba(255, 107, 107, 0.4);
+    }
+
+    .alerta.sucesso {
+      display: flex;
+      background: rgba(81, 207, 102, 0.15);
+      color: #1b5e20;
+      border: 1px solid rgba(81, 207, 102, 0.4);
+    }
+
+    /* ===========================
+         RODAPÉ DO CARD
+      =========================== */
+    .register {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.88rem;
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    .register a {
+      color: #016366;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .register a:hover { color: #00bfff; }
+
+    .crm-info {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: rgba(1, 99, 102, 0.08);
+      border: 1px solid rgba(1, 99, 102, 0.15);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 20px;
+      font-size: 0.82rem;
+      color: rgba(0, 0, 0, 0.55);
+      line-height: 1.5;
+    }
+
+    .crm-info i {
+      color: #016366;
+      font-size: 0.95rem;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+         DIVISOR "OU"
+      =========================== */
+    .ou-divisor {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 18px 0 4px;
+      color: rgba(0,0,0,0.35);
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .ou-divisor::before,
+    .ou-divisor::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(1, 99, 102, 0.15);
+    }
+
+    /* ===========================
+         MODAL CADASTRO
+      =========================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .modal-overlay.aberto {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-cadastro {
+      width: 600px;
+      max-width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 44px 40px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+      transform: translateY(30px) scale(0.97);
+      transition: transform 0.35s ease;
+      scrollbar-width: thin;
+      scrollbar-color: #016366 transparent;
+    }
+
+    .modal-overlay.aberto .modal-cadastro {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-cadastro::-webkit-scrollbar { width: 5px; }
+    .modal-cadastro::-webkit-scrollbar-thumb { background: #016366; border-radius: 10px; }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .modal-header h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #016366;
+    }
+
+    .btn-fechar {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: rgba(0,0,0,0.4);
+      cursor: pointer;
+      transition: 0.2s;
+      padding: 0;
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .btn-fechar:hover { color: #ff6b6b; transform: rotate(90deg); }
+
+    .modal-sub {
+      color: rgba(0, 0, 0, 0.5);
+      font-size: 0.88rem;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .modal-sub span {
+      color: #016366;
+      font-weight: 700;
+    }
+
+    /* Grade 2 colunas */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 16px;
+    }
+
+    .form-grid .import-group.full {
+      grid-column: 1 / -1;
+    }
+
+    /* Força o fundo branco nos inputs do modal */
+    .modal-cadastro .input-wrap input,
+    .modal-cadastro .input-wrap select {
+      background: rgba(1, 99, 102, 0.04);
+      border: 1px solid rgba(1, 99, 102, 0.18);
+      color: rgba(0,0,0,0.8);
+    }
+
+    .modal-cadastro .input-wrap input:focus,
+    .modal-cadastro .input-wrap select:focus {
+      background: white;
+    }
+
+    /* Requisitos de senha */
+    .requisitos-senha {
+      margin-top: 6px;
+      padding: 10px 12px;
+      background: rgba(1, 99, 102, 0.05);
+      border-radius: 8px;
+      font-size: 0.78rem;
+      color: rgba(0,0,0,0.5);
+      line-height: 1.8;
+    }
+
+    .req-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.3s;
+    }
+
+    .req-item i { font-size: 0.7rem; }
+    .req-item.ok { color: #51cf66; }
+    .req-item.ok i::before { content: "\f26b"; } /* bi-check-circle-fill */
+
+    /* Alerta do modal */
+    .alerta-modal {
+      display: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .alerta-modal.erro {
+      display: flex;
+      background: rgba(255, 107, 107, 0.12);
+      color: #c62828;
+      border: 1px solid rgba(255, 107, 107, 0.35);
+    }
+
+    .alerta-modal.sucesso {
+      display: flex;
+      background: rgba(81, 207, 102, 0.12);
+      color: #1b5e20;
+      border: 1px solid rgba(81, 207, 102, 0.35);
+    }
+
+    /* Termos */
+    .termos-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 4px;
+      font-size: 0.82rem;
+      color: rgba(0,0,0,0.55);
+      line-height: 1.5;
+    }
+
+    .termos-wrap input[type="checkbox"] {
+      accent-color: #016366;
+      margin-top: 2px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .termos-wrap a {
+      color: #016366;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .termos-wrap a:hover { color: #00bfff; }
+
+    /* Etapas visuais */
+    .etapas {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 28px;
+    }
+
+    .etapa {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: rgba(0,0,0,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .etapa-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+
+    .etapa.ativa .etapa-num {
+      background: linear-gradient(135deg, #016366, #00bfff);
+      border-color: transparent;
+      color: white;
+    }
+
+    .etapa.ativa { color: #016366; }
+
+    .etapa.concluida .etapa-num {
+      background: #51cf66;
+      border-color: transparent;
+      color: white;
+    }
+
+    .etapa-linha {
+      width: 40px;
+      height: 2px;
+      background: rgba(0,0,0,0.1);
+      margin: 0 4px;
+      transition: 0.3s;
+    }
+
+    .etapa-linha.ativa { background: linear-gradient(90deg, #016366, #00bfff); }
+
+    /* Passos do formulário */
+    .passo { display: none; }
+    .passo.ativo { display: block; }
+
+    /* ===========================
+         ANIMAÇÕES
+      =========================== */
+    @keyframes slideDown {
+      from { transform: translateY(0); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===========================
+         RESPONSIVO
+      =========================== */
+    @media (max-width: 620px) {
+      .modal-cadastro { padding: 32px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .import-group.full { grid-column: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .login-medico {
+        width: 100%;
+        padding: 36px 24px;
+        margin: 0 16px;
+      }
+      .login-medico h2 { font-size: 1.5rem; }
+    }
+  </style>
+    <link rel="stylesheet" href="../assets/styles/hamburger.css" />
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <section class="top-header">
+      <div class="interface">
+        <div class="logotipo">
+          <a href="index.html">
+            <img src="../assets/images/logosemfundo.png" alt="Logo ReabilitaCare" />
+          </a>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px">
+          <div class="btn-social">
+            <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+          </div>
+          <div class="area-usuario">
+            <a href="loginmedico.html">Área do Médico</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  <section class="bottom-header">
+    <div class="interface nav-interface">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i class="bi bi-list" id="navIcon"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="login-medico">
+
+      <div class="badge-medico">
+        <i class="bi bi-shield-plus"></i> Acesso Médico
+      </div>
+
+      <h2>Bem-vindo, Doutor(a)!</h2>
+      <p class="login-sub">
+        Acesse o painel médico da <span>ReabilitaCare</span> e gerencie seus pacientes e agendamentos.
+      </p>
+
+      <div class="divisor-card"></div>
+
+      <div class="crm-info">
+        <i class="bi bi-info-circle"></i>
+        Utilize seu CRM e senha cadastrados para acessar o sistema. Em caso de dúvidas, contate o suporte.
+      </div>
+
+      <div class="alerta" id="alerta">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span id="alerta-texto"></span>
+      </div>
+
+      <div class="import-group">
+        <label for="crm">CRM</label>
+        <div class="input-wrap">
+          <i class="bi bi-card-text"></i>
+          <input type="text" id="crm" placeholder="Ex: CRM/SP 123456" maxlength="20" />
+        </div>
+      </div>
+
+      <div class="import-group">
+        <label for="senha">Senha</label>
+        <div class="input-wrap">
+          <i class="bi bi-lock"></i>
+          <input type="password" id="senha" placeholder="Digite sua senha" />
+          <button class="toggle-senha" type="button" onclick="toggleSenha('senha', 'icone-olho')">
+            <i class="bi bi-eye" id="icone-olho"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="linha">
+        <label class="checkbox-label">
+          <input type="checkbox" id="lembrar" />
+          Lembrar acesso
+        </label>
+        <a href="redefinirmedico.html" class="link">Esqueci minha senha</a>
+      </div>
+
+      <button class="btn-primary" id="btnEntrar" onclick="fazerLogin()">
+        <i class="bi bi-box-arrow-in-right"></i> Entrar
+      </button>
+
+      <div class="ou-divisor">ou</div>
+
+      <button class="btn-outline" onclick="abrirCadastro()">
+        <i class="bi bi-person-plus"></i> Cadastrar-se como Médico
+      </button>
+
+      <div class="register">
+        Área exclusiva para médicos credenciados.
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ===========================
+       MODAL CADASTRO
+  =========================== -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fecharModalFora(event)">
+    <div class="modal-cadastro" id="modalCadastro">
+
+      <div class="modal-header">
+        <h2>Cadastro Médico</h2>
+        <button class="btn-fechar" onclick="fecharCadastro()" title="Fechar">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <p class="modal-sub">
+        Crie sua conta na <span>ReabilitaCare</span> e tenha acesso completo ao painel médico.
+      </p>
+
+      <!-- Etapas -->
+      <div class="etapas" id="etapas">
+        <div class="etapa ativa" id="etapa-1">
+          <div class="etapa-num">1</div>
+          <span>Dados Pessoais</span>
+        </div>
+        <div class="etapa-linha" id="linha-1"></div>
+        <div class="etapa" id="etapa-2">
+          <div class="etapa-num">2</div>
+          <span>Credenciais</span>
+        </div>
+        <div class="etapa-linha" id="linha-2"></div>
+        <div class="etapa" id="etapa-3">
+          <div class="etapa-num">3</div>
+          <span>Confirmação</span>
+        </div>
+      </div>
+
+      <!-- Alerta modal -->
+      <div class="alerta-modal" id="alerta-modal">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span id="alerta-modal-texto"></span>
+      </div>
+
+      <!-- ---- PASSO 1: Dados Pessoais ---- -->
+      <div class="passo ativo" id="passo-1">
+        <div class="form-grid">
+          <div class="import-group">
+            <label>Nome</label>
+            <div class="input-wrap">
+              <i class="bi bi-person"></i>
+              <input type="text" id="cad-nome" placeholder="Seu primeiro nome" />
+            </div>
+          </div>
+          <div class="import-group">
+            <label>Sobrenome</label>
+            <div class="input-wrap">
+              <i class="bi bi-person"></i>
+              <input type="text" id="cad-sobrenome" placeholder="Seu sobrenome" />
+            </div>
+          </div>
+          <div class="import-group">
+            <label>CRM</label>
+            <div class="input-wrap">
+              <i class="bi bi-card-text"></i>
+              <input type="text" id="cad-crm" placeholder="Ex: CRM/SP 123456" maxlength="20" />
+            </div>
+          </div>
+          <div class="import-group">
+            <label>Estado (UF)</label>
+            <div class="input-wrap">
+              <i class="bi bi-geo-alt"></i>
+              <select id="cad-uf">
+                <option value="">Selecione o estado</option>
+                <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+                <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+                <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+                <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+                <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+                <option selected>SP</option><option>SE</option><option>TO</option>
+              </select>
+            </div>
+          </div>
+          <div class="import-group full">
+            <label>Especialidade</label>
+            <div class="input-wrap">
+              <i class="bi bi-briefcase-medical"></i>
+              <select id="cad-especialidade">
+                <option value="">Selecione a especialidade</option>
+                <option>Fisioterapia</option>
+                <option>Ortopedia e Traumatologia</option>
+                <option>Clínica Médica</option>
+                <option>Psicologia</option>
+                <option>Psiquiatria</option>
+                <option>Outra</option>
+              </select>
+            </div>
+          </div>
+          <div class="import-group">
+            <label>Telefone</label>
+            <div class="input-wrap">
+              <i class="bi bi-telephone"></i>
+              <input type="tel" id="cad-telefone" placeholder="(21) 99999-0000" maxlength="15" />
+            </div>
+          </div>
+          <div class="import-group">
+            <label>Data de Nascimento</label>
+            <div class="input-wrap">
+              <i class="bi bi-calendar3"></i>
+              <input type="date" id="cad-nascimento" style="padding-left: 40px;" />
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="avancarPasso(2)" style="margin-top: 8px;">
+          Próximo <i class="bi bi-arrow-right"></i>
+        </button>
+      </div>
+
+      <!-- ---- PASSO 2: Credenciais ---- -->
+      <div class="passo" id="passo-2">
+        <div class="form-grid">
+          <div class="import-group full">
+            <label>E-mail institucional</label>
+            <div class="input-wrap">
+              <i class="bi bi-envelope"></i>
+              <input type="email" id="cad-email" placeholder="seu@email.com.br" />
+            </div>
+          </div>
+          <div class="import-group full">
+            <label>Confirmar e-mail</label>
+            <div class="input-wrap">
+              <i class="bi bi-envelope-check"></i>
+              <input type="email" id="cad-email2" placeholder="Confirme seu e-mail" />
+            </div>
+          </div>
+          <div class="import-group full">
+            <label>Criar senha</label>
+            <div class="input-wrap">
+              <i class="bi bi-lock"></i>
+              <input type="password" id="cad-senha" placeholder="Mínimo 8 caracteres" oninput="verificarSenha()" />
+              <button class="toggle-senha" type="button" onclick="toggleSenha('cad-senha', 'olho-cad')">
+                <i class="bi bi-eye" id="olho-cad"></i>
+              </button>
+            </div>
+            <div class="requisitos-senha">
+              <div class="req-item" id="req-len"><i class="bi bi-circle-fill"></i> Mínimo 8 caracteres</div>
+              <div class="req-item" id="req-upper"><i class="bi bi-circle-fill"></i> Uma letra maiúscula</div>
+              <div class="req-item" id="req-num"><i class="bi bi-circle-fill"></i> Um número</div>
+              <div class="req-item" id="req-special"><i class="bi bi-circle-fill"></i> Um caractere especial (!@#$...)</div>
+            </div>
+          </div>
+          <div class="import-group full">
+            <label>Confirmar senha</label>
+            <div class="input-wrap">
+              <i class="bi bi-lock-fill"></i>
+              <input type="password" id="cad-senha2" placeholder="Repita a senha" />
+              <button class="toggle-senha" type="button" onclick="toggleSenha('cad-senha2', 'olho-cad2')">
+                <i class="bi bi-eye" id="olho-cad2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top: 8px;">
+          <button class="btn-outline" onclick="voltarPasso(1)" style="margin-top:0;">
+            <i class="bi bi-arrow-left"></i> Voltar
+          </button>
+          <button class="btn-primary" onclick="avancarPasso(3)" style="margin-top:0;">
+            Próximo <i class="bi bi-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- ---- PASSO 3: Confirmação ---- -->
+      <div class="passo" id="passo-3">
+
+        <!-- Resumo -->
+        <div style="background: rgba(1,99,102,0.05); border: 1px solid rgba(1,99,102,0.15); border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; font-size: 0.88rem; color: rgba(0,0,0,0.65); line-height: 2;">
+          <div style="font-weight:700; color:#016366; margin-bottom: 6px; font-size:0.9rem;">
+            <i class="bi bi-clipboard-check"></i> Resumo do Cadastro
+          </div>
+          <div><b>Nome:</b> <span id="resumo-nome">—</span></div>
+          <div><b>CRM:</b> <span id="resumo-crm">—</span></div>
+          <div><b>Especialidade:</b> <span id="resumo-esp">—</span></div>
+          <div><b>E-mail:</b> <span id="resumo-email">—</span></div>
+          <div><b>Telefone:</b> <span id="resumo-tel">—</span></div>
+        </div>
+
+        <div class="termos-wrap">
+          <input type="checkbox" id="aceitar-termos" />
+          <label for="aceitar-termos">
+            Li e aceito os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a> da ReabilitaCare. Declaro que as informações fornecidas são verdadeiras.
+          </label>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top: 16px;">
+          <button class="btn-outline" onclick="voltarPasso(2)" style="margin-top:0;">
+            <i class="bi bi-arrow-left"></i> Voltar
+          </button>
+          <button class="btn-primary" id="btn-finalizar" onclick="finalizarCadastro()" style="margin-top:0;">
+            <i class="bi bi-check-circle"></i> Concluir Cadastro
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    /* ===========================
+       TOGGLE SENHA GENÉRICO
+    =========================== */
+    function toggleSenha(inputId, iconeId) {
+      const input = document.getElementById(inputId);
+      const icone = document.getElementById(iconeId);
+      if (input.type === "password") {
+        input.type = "text";
+        icone.className = "bi bi-eye-slash";
+      } else {
+        input.type = "password";
+        icone.className = "bi bi-eye";
+      }
+    }
+
+    /* ===========================
+       ALERTA LOGIN
+    =========================== */
+    function mostrarAlerta(msg, tipo) {
+      const alerta = document.getElementById("alerta");
+      const texto = document.getElementById("alerta-texto");
+      alerta.className = "alerta " + tipo;
+      alerta.querySelector("i").className = tipo === "sucesso"
+        ? "bi bi-check-circle-fill"
+        : "bi bi-exclamation-circle-fill";
+      texto.textContent = msg;
+      setTimeout(() => { alerta.className = "alerta"; }, 4000);
+    }
+
+    /* ===========================
+       LOGIN
+    =========================== */
+    function fazerLogin() {
+      const crm = document.getElementById("crm").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      const crmInput = document.getElementById("crm");
+      const senhaInput = document.getElementById("senha");
+
+      crmInput.className = "";
+      senhaInput.className = "";
+
+      if (!crm) {
+        crmInput.classList.add("input-erro");
+        mostrarAlerta("Por favor, informe seu CRM.", "erro");
+        return;
+      }
+      if (!senha) {
+        senhaInput.classList.add("input-erro");
+        mostrarAlerta("Por favor, informe sua senha.", "erro");
+        return;
+      }
+      if (senha.length < 6) {
+        senhaInput.classList.add("input-erro");
+        mostrarAlerta("A senha deve ter pelo menos 6 caracteres.", "erro");
+        return;
+      }
+
+      const btn = document.getElementById("btnEntrar");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Verificando...';
+
+      setTimeout(() => {
+        crmInput.classList.add("input-sucesso");
+        senhaInput.classList.add("input-sucesso");
+        mostrarAlerta("Acesso autorizado! Redirecionando...", "sucesso");
+        btn.innerHTML = '<i class="bi bi-check-lg"></i> Acesso autorizado!';
+
+        // Salva sessão do médico no localStorage
+        const medicoLogado = {
+          crm: crm,
+          nome: "Dr. Ricardo Mendes",
+          especialidade: "Fisioterapia Ortopédica",
+          crefito: "CREFITO 257658-F",
+          loginEm: new Date().toISOString()
+        };
+        localStorage.setItem("medico_logado", JSON.stringify(medicoLogado));
+
+        setTimeout(() => {
+          window.location.href = "areadoutor.html";
+        }, 1500);
+      }, 1500);
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !document.getElementById("modalOverlay").classList.contains("aberto")) {
+        fazerLogin();
+      }
+    });
+
+    /* ===========================
+       MODAL CADASTRO
+    =========================== */
+    function abrirCadastro() {
+      document.getElementById("modalOverlay").classList.add("aberto");
+      document.body.style.overflow = "hidden";
+      irParaPasso(1);
+    }
+
+    function fecharCadastro() {
+      document.getElementById("modalOverlay").classList.remove("aberto");
+      document.body.style.overflow = "";
+    }
+
+    function fecharModalFora(e) {
+      if (e.target === document.getElementById("modalOverlay")) {
+        fecharCadastro();
+      }
+    }
+
+    /* ===========================
+       NAVEGAÇÃO DE PASSOS
+    =========================== */
+    function irParaPasso(n) {
+      [1, 2, 3].forEach(i => {
+        document.getElementById("passo-" + i).classList.toggle("ativo", i === n);
+        const etapa = document.getElementById("etapa-" + i);
+        etapa.classList.remove("ativa", "concluida");
+        if (i < n) etapa.classList.add("concluida");
+        else if (i === n) etapa.classList.add("ativa");
+      });
+      [1, 2].forEach(i => {
+        document.getElementById("linha-" + i).classList.toggle("ativa", i < n);
+      });
+      // Limpar alerta modal
+      document.getElementById("alerta-modal").className = "alerta-modal";
+    }
+
+    function voltarPasso(n) { irParaPasso(n); }
+
+    function mostrarAlertaModal(msg, tipo) {
+      const el = document.getElementById("alerta-modal");
+      el.className = "alerta-modal " + tipo;
+      el.querySelector("i").className = tipo === "sucesso"
+        ? "bi bi-check-circle-fill"
+        : "bi bi-exclamation-circle-fill";
+      document.getElementById("alerta-modal-texto").textContent = msg;
+      setTimeout(() => { el.className = "alerta-modal"; }, 4000);
+    }
+
+    function avancarPasso(destino) {
+      if (destino === 2) {
+        // Validar passo 1
+        const nome = document.getElementById("cad-nome").value.trim();
+        const sobrenome = document.getElementById("cad-sobrenome").value.trim();
+        const crm = document.getElementById("cad-crm").value.trim();
+        const uf = document.getElementById("cad-uf").value;
+        const esp = document.getElementById("cad-especialidade").value;
+        const tel = document.getElementById("cad-telefone").value.trim();
+        const nasc = document.getElementById("cad-nascimento").value;
+
+        if (!nome) { mostrarAlertaModal("Informe seu nome.", "erro"); return; }
+        if (!sobrenome) { mostrarAlertaModal("Informe seu sobrenome.", "erro"); return; }
+        if (!crm) { mostrarAlertaModal("Informe seu CRM.", "erro"); return; }
+        if (!uf) { mostrarAlertaModal("Selecione o estado (UF).", "erro"); return; }
+        if (!esp) { mostrarAlertaModal("Selecione sua especialidade.", "erro"); return; }
+        if (!tel) { mostrarAlertaModal("Informe seu telefone.", "erro"); return; }
+        if (!nasc) { mostrarAlertaModal("Informe sua data de nascimento.", "erro"); return; }
+        irParaPasso(2);
+
+      } else if (destino === 3) {
+        // Validar passo 2
+        const email = document.getElementById("cad-email").value.trim();
+        const email2 = document.getElementById("cad-email2").value.trim();
+        const senha = document.getElementById("cad-senha").value;
+        const senha2 = document.getElementById("cad-senha2").value;
+
+        if (!email || !/\S+@\S+\.\S+/.test(email)) { mostrarAlertaModal("Informe um e-mail válido.", "erro"); return; }
+        if (email !== email2) { mostrarAlertaModal("Os e-mails não coincidem.", "erro"); return; }
+        if (!validarSenhaCompleta(senha)) { mostrarAlertaModal("A senha não atende todos os requisitos.", "erro"); return; }
+        if (senha !== senha2) { mostrarAlertaModal("As senhas não coincidem.", "erro"); return; }
+
+        // Preencher resumo
+        const nome = document.getElementById("cad-nome").value.trim();
+        const sobrenome = document.getElementById("cad-sobrenome").value.trim();
+        const crm = document.getElementById("cad-crm").value.trim();
+        const uf = document.getElementById("cad-uf").value;
+        const esp = document.getElementById("cad-especialidade").value;
+        const tel = document.getElementById("cad-telefone").value.trim();
+
+        document.getElementById("resumo-nome").textContent = nome + " " + sobrenome;
+        document.getElementById("resumo-crm").textContent = crm + "/" + uf;
+        document.getElementById("resumo-esp").textContent = esp;
+        document.getElementById("resumo-email").textContent = email;
+        document.getElementById("resumo-tel").textContent = tel;
+
+        irParaPasso(3);
+      }
+    }
+
+    /* ===========================
+       REQUISITOS DE SENHA
+    =========================== */
+    function verificarSenha() {
+      const v = document.getElementById("cad-senha").value;
+      marcarReq("req-len", v.length >= 8);
+      marcarReq("req-upper", /[A-Z]/.test(v));
+      marcarReq("req-num", /[0-9]/.test(v));
+      marcarReq("req-special", /[!@#$%^&*(),.?":{}|<>_\-]/.test(v));
+    }
+
+    function marcarReq(id, ok) {
+      const el = document.getElementById(id);
+      el.classList.toggle("ok", ok);
+      el.querySelector("i").className = ok ? "bi bi-check-circle-fill" : "bi bi-circle-fill";
+    }
+
+    function validarSenhaCompleta(v) {
+      return v.length >= 8 && /[A-Z]/.test(v) && /[0-9]/.test(v) && /[!@#$%^&*(),.?":{}|<>_\-]/.test(v);
+    }
+
+    /* ===========================
+       MÁSCARA TELEFONE
+    =========================== */
+    document.getElementById("cad-telefone").addEventListener("input", function () {
+      let v = this.value.replace(/\D/g, "").substring(0, 11);
+      if (v.length > 6) v = "(" + v.substring(0,2) + ") " + v.substring(2,7) + "-" + v.substring(7);
+      else if (v.length > 2) v = "(" + v.substring(0,2) + ") " + v.substring(2);
+      else if (v.length > 0) v = "(" + v;
+      this.value = v;
+    });
+
+    /* ===========================
+       FINALIZAR CADASTRO
+    =========================== */
+    function finalizarCadastro() {
+      if (!document.getElementById("aceitar-termos").checked) {
+        mostrarAlertaModal("Você precisa aceitar os Termos de Uso para continuar.", "erro");
+        return;
+      }
+
+      const btn = document.getElementById("btn-finalizar");
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Enviando...';
+
+      setTimeout(() => {
+        btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Cadastro realizado!';
+        mostrarAlertaModal("Cadastro enviado com sucesso! Você receberá um e-mail de confirmação em breve.", "sucesso");
+
+        setTimeout(() => {
+          fecharCadastro();
+          btn.disabled = false;
+          btn.innerHTML = '<i class="bi bi-check-circle"></i> Concluir Cadastro';
+          // Limpar formulário
+          ["cad-nome","cad-sobrenome","cad-crm","cad-telefone","cad-nascimento","cad-email","cad-email2","cad-senha","cad-senha2"]
+            .forEach(id => document.getElementById(id).value = "");
+          document.getElementById("cad-uf").value = "";
+          document.getElementById("cad-especialidade").value = "";
+          document.getElementById("aceitar-termos").checked = false;
+        }, 3000);
+      }, 1800);
+    }
+  </script>
+
+      <script src="../assets/scripts/hamburger.js"></script>
+    <script src="../assets/scripts/acessibilidade.js"></script>
+</body>
+</html>

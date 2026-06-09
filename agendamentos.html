@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agendamentos – ReabilitaCare</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/styles/agendamentos.css" />
+    <style>
+      /* ── Melhorias de UI para o fluxo interativo ── */
+
+      /* Passo a passo */
+      .stepper {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        margin-bottom: 32px;
+        margin-top: 8px;
+      }
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #aab2c8;
+        font-family: "Inter", sans-serif;
+        white-space: nowrap;
+      }
+      .step-num {
+        width: 26px; height: 26px;
+        border-radius: 50%;
+        border: 2px solid #d0d8e8;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.78rem;
+        font-weight: 700;
+        transition: all 0.3s;
+        flex-shrink: 0;
+      }
+      .step.done .step-num   { background: #1A6FD4; border-color: #1A6FD4; color: #fff; }
+      .step.active .step-num { background: #fff; border-color: #1A6FD4; color: #1A6FD4; box-shadow: 0 0 0 3px #E6F1FB; }
+      .step.active           { color: #1A6FD4; }
+      .step.done             { color: #1A6FD4; }
+      .step-line {
+        flex: 1;
+        height: 2px;
+        background: #d0d8e8;
+        margin: 0 6px;
+        min-width: 18px;
+        transition: background 0.3s;
+      }
+      .step-line.done { background: #1A6FD4; }
+
+      /* Dias selecionados no calendário */
+      .days li.selected::before { background: #016366 !important; }
+      .days li.selected { color: #fff !important; font-weight: 700; }
+      .days li.inactive { pointer-events: none; }
+      .days li.passado { color: #ccc !important; pointer-events: none; cursor: default; }
+      .days li.passado::before { background: transparent !important; }
+
+      /* Horário selecionado */
+      .horarios p.selecionado {
+        background-color: var(--azul-primario) !important;
+        border-color: var(--azul-primario) !important;
+        color: white !important;
+      }
+      /* Remove o hardcoded nth-child azul */
+      .horarios > p:nth-child(3) {
+        background-color: transparent;
+        border-color: #d0d8e8;
+        color: var(--texto-secundario);
+      }
+
+      /* Card médico selecionado */
+      .medico {
+        cursor: pointer;
+        transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      }
+      .medico:hover {
+        border-color: var(--azul-primario);
+        box-shadow: 0 4px 18px rgba(26,111,212,0.12);
+        transform: translateY(-2px);
+      }
+      .medico.selecionado {
+        border-color: var(--azul-primario) !important;
+        box-shadow: 0 0 0 3px rgba(26,111,212,0.15) !important;
+      }
+      .medico .badge-selecionado {
+        display: none;
+        background: var(--azul-primario);
+        color: #fff;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 9px;
+        border-radius: 20px;
+        margin-left: 8px;
+        vertical-align: middle;
+        font-family: "Inter", sans-serif;
+      }
+      .medico.selecionado .badge-selecionado { display: inline; }
+
+      /* Filtro de especialidade */
+      .especialidade-filtro-aviso {
+        font-size: 0.8rem;
+        color: var(--texto-fraco);
+        margin-top: 8px;
+        font-family: "Inter", sans-serif;
+      }
+      .medico.oculto { display: none; }
+
+      /* Modal overlay real */
+      .sobreposicao-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.45);
+        backdrop-filter: blur(3px);
+        z-index: 9000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+        margin: 0 !important;
+      }
+      .sobreposicao-modal.aberto {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        width: 100%;
+        max-width: 540px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        animation: modalIn 0.25s ease;
+      }
+      @keyframes modalIn {
+        from { transform: translateY(20px) scale(0.97); opacity: 0; }
+        to   { transform: translateY(0) scale(1); opacity: 1; }
+      }
+      .modal-fechar {
+        position: absolute;
+        top: 14px; right: 14px;
+        background: #f0f4fb;
+        border: none;
+        border-radius: 50%;
+        width: 30px; height: 30px;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        font-size: 1rem;
+        color: #666;
+        transition: background 0.2s;
+        z-index: 10;
+      }
+      .modal-fechar:hover { background: #e0e7f5; color: #333; }
+
+      /* Resumo no modal */
+      .modal-resumo {
+        background: var(--azul-claro);
+        border-radius: 10px;
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+      }
+      .modal-resumo-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        color: var(--azul-medio);
+        font-family: "Inter", sans-serif;
+        font-weight: 600;
+      }
+      .modal-resumo-item i { font-size: 0.9rem; }
+
+      /* Toast de confirmação */
+      #rc-toast {
+        position: fixed;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%) translateY(60px);
+        background: #1a2e1a;
+        color: #fff;
+        padding: 14px 24px;
+        border-radius: 12px;
+        font-family: "Inter", sans-serif;
+        font-size: 0.92rem;
+        font-weight: 600;
+        z-index: 99999;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: transform 0.35s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      #rc-toast.visivel {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+      #rc-toast i { font-size: 1.1rem; color: #4ade80; }
+
+      /* Estado vazio de médicos */
+      .sem-medicos {
+        display: none;
+        text-align: center;
+        padding: 32px 16px;
+        color: var(--texto-fraco);
+        font-family: "Inter", sans-serif;
+        font-size: 0.95rem;
+        background: var(--surface);
+        border: 0.5px dashed var(--azul-borda);
+        border-radius: 12px;
+        margin-bottom: 16px;
+      }
+      .sem-medicos i { font-size: 2rem; color: #c0cadc; display: block; margin-bottom: 8px; }
+
+      /* Instrução de seleção */
+      .instrucao-horario {
+        font-size: 0.82rem;
+        color: var(--texto-fraco);
+        margin-top: 6px;
+        font-family: "Inter", sans-serif;
+        font-style: italic;
+      }
+
+      /* Botão cancelar no modal */
+      .botao-cancelar {
+        background: transparent;
+        border: 1px solid #d0d8e8;
+        border-radius: 8px;
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--texto-secundario);
+        cursor: pointer;
+        transition: background 0.2s;
+        font-family: "Inter", sans-serif;
+      }
+      .botao-cancelar:hover { background: #f0f4fb; }
+      .rodape-modal { gap: 10px; }
+
+      /* Validação */
+      .campo input.erro,
+      .campo select.erro,
+      .campo textarea.erro {
+        border-color: #e53935 !important;
+      }
+      .erro-msg {
+        font-size: 0.78rem;
+        color: #e53935;
+        font-family: "Inter", sans-serif;
+        margin-top: -4px;
+      }
+    </style>
+      <link rel="stylesheet" href="../assets/styles/hamburger.css" />
+</head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <section class="top-header">
+        <div class="interface">
+          <div class="logotipo">
+            <a href="index.html">
+              <img src="../assets/images/logosemfundo.png" alt="Logo ReabilitaCare" />
+            </a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 15px">
+            <div class="btn-social">
+              <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+              <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+              <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+            <div class="area-usuario">
+              <a href="redirecionamento.html" id="btnLogin">Entrar</a>
+              <div id="usuarioLogado" class="usuario-logado">
+                <span id="nomeUsuario"></span>
+                <button onclick="logout()">Sair</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  <section class="bottom-header">
+    <div class="interface nav-interface">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i class="bi bi-list" id="navIcon"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+    </header>
+
+    <main>
+      <section>
+        <div class="agendamento">
+          <h1>Novo agendamento</h1>
+          <p>Encontre o profissional ideal para sua reabilitação e reserve seu horário em poucos cliques</p>
+        </div>
+
+        <!-- STEPPER -->
+        <div class="stepper">
+          <div class="step active" id="step-1">
+            <div class="step-num">1</div>
+            <span>Escolha a data</span>
+          </div>
+          <div class="step-line" id="line-1"></div>
+          <div class="step" id="step-2">
+            <div class="step-num">2</div>
+            <span>Escolha o médico</span>
+          </div>
+          <div class="step-line" id="line-2"></div>
+          <div class="step" id="step-3">
+            <div class="step-num">3</div>
+            <span>Escolha o horário</span>
+          </div>
+          <div class="step-line" id="line-3"></div>
+          <div class="step" id="step-4">
+            <div class="step-num">4</div>
+            <span>Confirme</span>
+          </div>
+        </div>
+
+        <div class="quebra">
+          <!-- COLUNA ESQUERDA: calendário + filtro -->
+          <div class="coluna-esquerda">
+            <div class="wrapper">
+              <header>
+                <h2 class="current-date"></h2>
+                <div class="icons">
+                  <span id="prev"><img src="../assets/icons/arrow-point-to-left.png" alt="Anterior" /></span>
+                  <span id="next"><img src="../assets/icons/arrow-point-to-right.png" alt="Próximo" /></span>
+                </div>
+              </header>
+              <div class="calendar">
+                <ul class="weeks">
+                  <li><strong>Dom</strong></li>
+                  <li><strong>Seg</strong></li>
+                  <li><strong>Ter</strong></li>
+                  <li><strong>Qua</strong></li>
+                  <li><strong>Qui</strong></li>
+                  <li><strong>Sex</strong></li>
+                  <li><strong>Sab</strong></li>
+                </ul>
+                <ul class="days"></ul>
+              </div>
+            </div>
+
+            <div class="especialidade">
+              <h2>Filtrar por especialidade</h2>
+              <optgroup id="filtro-especialidades">
+                <label><input type="checkbox" value="geral"        /> Clínica Geral</label>
+                <label><input type="checkbox" value="psicologia"   /> Psicologia</label>
+                <label><input type="checkbox" value="dermatologia" /> Dermatologia</label>
+                <label><input type="checkbox" value="cardiologia"  /> Cardiologia</label>
+                <label><input type="checkbox" value="fisioterapia" /> Fisioterapia</label>
+                <label><input type="checkbox" value="osteopatia"   /> Osteopatia</label>
+              </optgroup>
+              <p class="especialidade-filtro-aviso" id="aviso-filtro" style="display:none">Nenhum médico encontrado para os filtros selecionados.</p>
+            </div>
+          </div>
+
+          <!-- COLUNA DIREITA: médicos + modal -->
+          <aside>
+
+            <!-- Data selecionada badge -->
+            <div id="data-badge" style="display:none; margin-bottom:16px;">
+              <span style="background:var(--azul-claro);color:var(--azul-medio);padding:6px 14px;border-radius:20px;font-size:0.85rem;font-weight:700;font-family:'Inter',sans-serif;">
+                <i class="bi bi-calendar3" style="margin-right:6px;"></i>
+                <span id="data-badge-texto"></span>
+              </span>
+            </div>
+
+            <!-- Estado vazio -->
+            <div class="sem-medicos" id="sem-medicos">
+              <i class="bi bi-search"></i>
+              Nenhum médico encontrado para os filtros selecionados.
+            </div>
+
+            <!-- CARD DR. RICARDO -->
+            <div class="medico" id="card-ricardo" data-especialidades="fisioterapia geral">
+              <div class="quadrado">
+                <img src="../assets/images/ricardo-foto.jpg" alt="Dr. Ricardo Mendes" />
+              </div>
+              <div class="textos">
+                <div class="ricardo-alinhado">
+                  <h2>Dr. Ricardo Mendes <span class="badge-selecionado">✓ Selecionado</span></h2>
+                  <div class="avaliacoes">
+                    <img src="../assets/icons/estrela.png" alt="estrela" />
+                    <p>4.9 (124 avaliações)</p>
+                  </div>
+                </div>
+                <h3>Fisioterapia Ortopédica</h3>
+                <p>Especialista em reabilitação pós-cirúrgica e lesões musculoesqueléticas com mais de 10 anos de experiência.</p>
+                <div class="horarios" id="horarios-ricardo">
+                  <p data-hora="08:00">8:00</p>
+                  <p data-hora="09:00">9:00</p>
+                  <p data-hora="10:00">10:00</p>
+                  <p data-hora="12:00">12:00</p>
+                  <p data-hora="14:30">14:30</p>
+                  <p data-hora="16:30">16:30</p>
+                  <p data-hora="20:00">20:00</p>
+                </div>
+                <p class="instrucao-horario" id="instr-ricardo">Selecione um horário para prosseguir</p>
+              </div>
+            </div>
+
+            <!-- CARD DRA. CAMILA -->
+            <div class="medico" id="card-camila" data-especialidades="osteopatia psicologia geral">
+              <div class="quadrado">
+                <img src="../assets/images/camila-foto.jpg" alt="Dra. Camila Santos" />
+              </div>
+              <div class="textos">
+                <div class="ricardo-alinhado">
+                  <h2>Dra. Camila Santos <span class="badge-selecionado">✓ Selecionada</span></h2>
+                  <div class="avaliacoes">
+                    <img src="../assets/icons/estrela.png" alt="estrela" />
+                    <p>5.0 (89 avaliações)</p>
+                  </div>
+                </div>
+                <h3>Osteopatia &amp; Bem-estar</h3>
+                <p>Foco em tratamento holístico e bem-estar integral, com abordagem personalizada para cada paciente.</p>
+                <div class="horarios" id="horarios-camila">
+                  <p data-hora="08:00">8:00</p>
+                  <p data-hora="09:00">9:00</p>
+                  <p data-hora="10:30">10:30</p>
+                  <p data-hora="14:00">14:00</p>
+                  <p data-hora="15:30">15:30</p>
+                  <p data-hora="18:30">18:30</p>
+                  <p data-hora="20:30">20:30</p>
+                </div>
+                <p class="instrucao-horario" id="instr-camila">Selecione um horário para prosseguir</p>
+              </div>
+            </div>
+
+            <!-- MODAL DE CONFIRMAÇÃO (overlay) -->
+            <div class="sobreposicao-modal" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+              <div class="modal">
+                <button class="modal-fechar" id="modal-fechar" aria-label="Fechar">
+                  <i class="bi bi-x"></i>
+                </button>
+
+                <h2 id="modal-titulo">Confirme sua Consulta</h2>
+
+                <!-- Resumo automático -->
+                <div class="modal-resumo" id="modal-resumo">
+                  <div class="modal-resumo-item"><i class="bi bi-person-badge"></i> <span id="resumo-medico">—</span></div>
+                  <div class="modal-resumo-item"><i class="bi bi-calendar3"></i> <span id="resumo-data">—</span></div>
+                  <div class="modal-resumo-item"><i class="bi bi-clock"></i> <span id="resumo-hora">—</span></div>
+                </div>
+
+                <div class="linha-modal">
+                  <div class="campo">
+                    <label><h3>Tipo de Consulta</h3></label>
+                    <select id="modal-tipo" title="Tipo de consulta">
+                      <option value="">Selecione...</option>
+                      <option value="avaliacao">Avaliação Inicial</option>
+                      <option value="retorno">Retorno</option>
+                      <option value="urgente">Consulta Urgente</option>
+                    </select>
+                  </div>
+                  <div class="campo">
+                    <label><h3>Paciente</h3></label>
+                    <input type="text" id="modal-paciente" placeholder="Seu nome completo" />
+                  </div>
+                </div>
+
+                <div class="campo">
+                  <label><h3>Observações Médicas</h3></label>
+                  <textarea id="modal-obs" placeholder="Descreva brevemente o motivo do agendamento..."></textarea>
+                </div>
+
+                <div class="rodape-modal">
+                  <button class="botao-cancelar" id="btn-cancelar">Cancelar</button>
+                  <button class="botao-finalizar" id="btn-finalizar">
+                    <p>Finalizar Agendamento</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <!-- TOAST -->
+    <div id="rc-toast"><i class="bi bi-check-circle-fill"></i> <span id="rc-toast-msg">Agendamento realizado!</span></div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-topo">
+        <div class="footer-interface">
+          <div class="footer-col footer-brand">
+            <img src="../assets/images/logosemfundo.png" alt="Logo ReabilitaCare" />
+            <p>Cuidando de você com atenção, tecnologia e humanidade. Sua reabilitação começa aqui.</p>
+            <div class="footer-social">
+              <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+              <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+              <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="index.html">Início</a></li>
+              <li><a href="sobre.html">Sobre</a></li>
+              <li><a href="agendamentos.html">Agendamentos</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Serviços</h4>
+            <ul>
+              <li><a href="#">Fisioterapia Ortopédica</a></li>
+              <li><a href="#">Osteopatia</a></li>
+              <li><a href="#">Reabilitação Pós-Cirúrgica</a></li>
+              <li><a href="#">Psicologia</a></li>
+              <li><a href="#">Cardiologia</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul class="footer-contato">
+              <li><i class="bi bi-geo-alt-fill"></i> Av. Principal, 1234 — Rio de Janeiro, RJ</li>
+              <li><i class="bi bi-telephone-fill"></i> (21) 99999-9999</li>
+              <li><i class="bi bi-envelope-fill"></i> contato@reabilitacare.com.br</li>
+              <li><i class="bi bi-clock-fill"></i> Seg–Sex: 8h às 19h</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-interface">
+          <p>© 2026 ReabilitaCare. Todos os direitos reservados.</p>
+          <p>Desenvolvido com carinho para sua saúde</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../assets/scripts/agendamentos.js"></script>
+        <script src="../assets/scripts/hamburger.js"></script>
+    <script src="../assets/scripts/acessibilidade.js"></script>
+  </body>
+</html>

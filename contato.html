@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fale Conosco – ReabilitaCare</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles/contato.css" />
+      <link rel="stylesheet" href="../assets/styles/hamburger.css" />
+</head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <section class="top-header">
+        <div class="interface">
+          <div class="logotipo">
+            <a href="index.html">
+              <img
+                src="../assets/images/logosemfundo.png"
+                alt="Logo ReabilitaCare"
+              />
+            </a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 15px">
+            <div class="btn-social">
+              <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+            <div class="area-usuario">
+             <a href="redirecionamento.html" id="btnLogin">Entrar</a>
+              <div id="usuarioLogado">
+                <span id="nomeUsuario"></span>
+                <button onclick="logout()">Sair</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  <section class="bottom-header">
+    <div class="interface nav-interface">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i class="bi bi-list" id="navIcon"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="contato-main">
+      <div class="contato-card">
+        <div class="contato-info">
+          <span class="contato-tag">Fale com a gente</span>
+          <h2>Estamos aqui <br /><span>para você</span></h2>
+          <p>
+            Dúvidas, sugestões ou elogios? Nossa equipe responde em até 24
+            horas.
+          </p>
+
+          <ul class="contato-lista">
+            <li>
+              <i class="bi bi-envelope-fill"></i> contato@reabilitacare.com.br
+            </li>
+            <li><i class="bi bi-whatsapp"></i> (21) 99999-0000</li>
+            <li>
+              <i class="bi bi-geo-alt-fill"></i> Rio de Janeiro, RJ – Brasil
+            </li>
+          </ul>
+        </div>
+
+        <form id="formContato" class="contato-form">
+          <div class="campo-grupo">
+            <label for="nome">Seu Nome</label>
+            <input
+              type="text"
+              id="nome"
+              placeholder="Como podemos te chamar?"
+              required
+            />
+          </div>
+
+          <div class="campo-grupo">
+            <label for="email">Seu E-mail</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="seu@email.com"
+              required
+            />
+          </div>
+
+          <div class="campo-grupo">
+            <label for="assunto">Assunto</label>
+            <input
+              type="text"
+              id="assunto"
+              placeholder="Sobre o que quer falar?"
+              required
+            />
+          </div>
+
+          <div class="campo-grupo">
+            <label for="mensagem">Mensagem</label>
+            <textarea
+              id="mensagem"
+              rows="5"
+              placeholder="Escreva sua mensagem aqui..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit">
+            <i class="bi bi-send-fill"></i> Enviar Mensagem
+          </button>
+        </form>
+      </div>
+    </main>
+    <!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-topo">
+    <div class="footer-interface">
+
+      <!-- LOGO + DESCRIÇÃO -->
+      <div class="footer-col footer-brand">
+        <img src="../assets/images/logosemfundo.png" alt="Logo ReabilitaCare" />
+        <p>Cuidando de você com atenção, tecnologia e humanidade. Sua reabilitação começa aqui.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+        </div>
+      </div>
+
+      <!-- LINKS -->
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </div>
+
+      <!-- SERVIÇOS -->
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#">Fisioterapia Ortopédica</a></li>
+          <li><a href="#">Osteopatia</a></li>
+          <li><a href="#">Reabilitação Pós-Cirúrgica</a></li>
+          <li><a href="#">Psicologia</a></li>
+          <li><a href="#">Cardiologia</a></li>
+        </ul>
+      </div>
+
+      <!-- CONTATO -->
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul class="footer-contato">
+          <li><i class="bi bi-geo-alt-fill"></i> Av. Principal, 1234 — Rio de Janeiro, RJ</li>
+          <li><i class="bi bi-telephone-fill"></i> (21) 99999-9999</li>
+          <li><i class="bi bi-envelope-fill"></i> contato@reabilitacare.com.br</li>
+          <li><i class="bi bi-clock-fill"></i> Seg–Sex: 8h às 19h</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RODAPÉ INFERIOR -->
+  <div class="footer-bottom">
+    <div class="footer-interface">
+      <p>© 2026 ReabilitaCare. Todos os direitos reservados.</p>
+      <p>Desenvolvido com carinho para sua saúde</p>
+    </div>
+  </div>
+</footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const usuario = localStorage.getItem("usuario");
+        const btnLogin = document.getElementById("btnLogin");
+        const usuarioLogado = document.getElementById("usuarioLogado");
+        const nomeUsuario = document.getElementById("nomeUsuario");
+        if (usuario) {
+          btnLogin.style.display = "none";
+          usuarioLogado.style.display = "flex";
+          nomeUsuario.innerText = "Olá, " + usuario;
+        } else {
+          usuarioLogado.style.display = "none";
+        }
+      });
+
+      function logout() {
+        localStorage.removeItem("usuario");
+        location.reload();
+      }
+
+      document
+        .getElementById("formContato")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const btn = this.querySelector("button[type='submit']");
+          btn.textContent = "Enviando...";
+          btn.disabled = true;
+          setTimeout(() => {
+            alert("Mensagem enviada com sucesso! Retornaremos em breve.");
+            this.reset();
+            btn.innerHTML = '<i class="bi bi-send-fill"></i> Enviar Mensagem';
+            btn.disabled = false;
+          }, 1800);
+        });
+    </script>
+        <script src="../assets/scripts/hamburger.js"></script>
+    <script src="../assets/scripts/acessibilidade.js"></script>
+</body>
+</html>

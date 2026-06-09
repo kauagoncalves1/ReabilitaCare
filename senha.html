@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Esqueci minha senha – ReabilitaCare</title>
+    <link rel="stylesheet" href="../assets/styles/senha.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"/>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap"
+      rel="stylesheet"/>
+    
+      <link rel="stylesheet" href="../assets/styles/hamburger.css" />
+</head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <section class="top-header">
+        <div class="interface">
+          <div class="logotipo">
+            <a href="index.html">
+              <img src="../assets/images/logosemfundo.png" alt="Logo ReabilitaCare" />
+            </a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 15px">
+            <div class="btn-social">
+              <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+            <div class="area-usuario">
+              <a href="login.html">Entrar</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  <section class="bottom-header">
+    <div class="interface nav-interface">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i class="bi bi-list" id="navIcon"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+      <div class="card">
+
+        <!-- TÍTULO -->
+        <h2>Esqueceu sua senha?</h2>
+        <p class="card-sub">Sem problemas! Siga os passos abaixo para recuperar o acesso à sua conta.</p>
+
+        <!-- ETAPAS -->
+        <div class="etapas">
+          <div class="etapa">
+            <div class="etapa-circulo ativa" id="circulo1">1</div>
+            <span class="ativa" id="label1">E-mail</span>
+          </div>
+          <div class="etapa-linha" id="linha1"></div>
+          <div class="etapa">
+            <div class="etapa-circulo" id="circulo2">2</div>
+            <span id="label2">Código</span>
+          </div>
+          <div class="etapa-linha" id="linha2"></div>
+          <div class="etapa">
+            <div class="etapa-circulo" id="circulo3">3</div>
+            <span id="label3">Nova senha</span>
+          </div>
+        </div>
+
+        <!-- ALERTA -->
+        <div class="alerta" id="alerta">
+          <i class="bi bi-check-circle-fill"></i>
+          <span id="alerta-texto"></span>
+        </div>
+
+        <!-- ===== ETAPA 1: E-MAIL ===== -->
+        <div id="etapa-1">
+          <div class="campo-grupo">
+            <label for="email">E-mail cadastrado</label>
+            <div class="input-wrap">
+              <i class="bi bi-envelope"></i>
+              <input type="email" id="email" placeholder="seu@email.com.br" />
+            </div>
+          </div>
+          <button class="btn-principal" onclick="irParaEtapa2()">
+            <i class="bi bi-send"></i> Enviar código de verificação
+          </button>
+          <div class="divisor">ou</div>
+          <div class="voltar-login">
+            <a href="login.html"><i class="bi bi-arrow-left"></i> Voltar para o login</a>
+          </div>
+        </div>
+
+        <!-- ===== ETAPA 2: CÓDIGO ===== -->
+        <div id="etapa-2" style="display:none">
+          <p style="font-size:0.88rem; color:#777; text-align:center; margin-bottom:20px; line-height:1.6;">
+            Enviamos um código de 6 dígitos para <strong id="email-exibido" style="color:#016366;"></strong>. Verifique sua caixa de entrada e spam.
+          </p>
+          <div class="campo-grupo">
+            <label for="codigo">Código de verificação</label>
+            <div class="input-wrap">
+              <i class="bi bi-key"></i>
+              <input type="text" id="codigo" placeholder="000000" maxlength="6" style="letter-spacing: 6px; font-size: 1.2rem; text-align:center;" />
+            </div>
+          </div>
+          <div style="text-align:center; margin-bottom:16px;">
+            <span style="font-size:0.82rem; color:#aaa;">Não recebeu? </span>
+            <a href="#" onclick="reenviarCodigo()" style="font-size:0.82rem; color:#016366; font-weight:700; text-decoration:none;">Reenviar código</a>
+            <span id="timer-reenvio" style="font-size:0.82rem; color:#aaa; display:none;"> (aguarde <span id="timer">60</span>s)</span>
+          </div>
+          <button class="btn-principal" onclick="irParaEtapa3()">
+            <i class="bi bi-check2"></i> Verificar código
+          </button>
+          <div class="voltar-login" style="margin-top:16px;">
+            <a href="#" onclick="voltarEtapa(1)"><i class="bi bi-arrow-left"></i> Voltar</a>
+          </div>
+        </div>
+
+        <!-- ===== ETAPA 3: NOVA SENHA ===== -->
+        <div id="etapa-3" style="display:none">
+          <div class="campo-grupo">
+            <label for="nova-senha">Nova senha</label>
+            <div class="input-wrap">
+              <i class="bi bi-lock"></i>
+              <input type="password" id="nova-senha" placeholder="Mínimo 8 caracteres" oninput="verificarForca()" />
+              <button class="toggle-senha" type="button" onclick="toggleSenha('nova-senha', this)">
+              </button>
+            </div>
+            <div class="forca-wrap" id="forca-wrap">
+              <div class="forca-label" id="forca-label">Força da senha</div>
+              <div class="forca-barras">
+                <div class="forca-barra" id="b1"></div>
+                <div class="forca-barra" id="b2"></div>
+                <div class="forca-barra" id="b3"></div>
+                <div class="forca-barra" id="b4"></div>
+              </div>
+            </div>
+            <span class="dica-senha"><i class="bi bi-info-circle"></i> Use letras maiúsculas, números e símbolos.</span>
+          </div>
+          <div class="campo-grupo">
+            <label for="confirmar-senha">Confirmar nova senha</label>
+            <div class="input-wrap">
+              <i class="bi bi-lock-fill"></i>
+              <input type="password" id="confirmar-senha" placeholder="Repita a senha" />
+              <button class="toggle-senha" type="button" onclick="toggleSenha('confirmar-senha', this)">
+              </button>
+            </div>
+          </div>
+          <button class="btn-principal" onclick="redefinirSenha()">
+            <i class="bi bi-shield-check"></i> Redefinir senha
+          </button>
+          <div class="voltar-login" style="margin-top:16px;">
+            <a href="#" onclick="voltarEtapa(2)"><i class="bi bi-arrow-left"></i> Voltar</a>
+          </div>
+        </div>
+
+        <!-- ===== TELA DE SUCESSO ===== -->
+        <div class="tela-sucesso" id="tela-sucesso">
+          <div class="sucesso-icon"><i class="bi bi-check-lg"></i></div>
+          <h3>Senha redefinida!</h3>
+          <p>Sua senha foi alterada com sucesso. Agora você já pode acessar sua conta com a nova senha.</p>
+          <a href="login.html" class="btn-principal" style="text-decoration:none; display:flex;">
+            <i class="bi bi-box-arrow-in-right"></i> Ir para o login
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- <script>
+      let etapaAtual = 1;
+
+      function mostrarAlerta(msg, tipo) {
+        const alerta = document.getElementById("alerta");
+        const texto = document.getElementById("alerta-texto");
+        alerta.className = "alerta " + tipo;
+        alerta.querySelector("i").className = tipo === "sucesso"
+          ? "bi bi-check-circle-fill"
+          : "bi bi-exclamation-circle-fill";
+        texto.textContent = msg;
+        setTimeout(() => { alerta.className = "alerta"; }, 4000);
+      }
+
+      function atualizarEtapas(etapa) {
+        for (let i = 1; i <= 3; i++) {
+          const circulo = document.getElementById("circulo" + i);
+          const label = document.getElementById("label" + i);
+          circulo.className = "etapa-circulo";
+          label.className = "";
+          if (i < etapa) {
+            circulo.classList.add("concluida");
+            circulo.innerHTML = '<i class="bi bi-check"></i>';
+          } else if (i === etapa) {
+            circulo.classList.add("ativa");
+            circulo.textContent = i;
+            label.classList.add("ativa");
+          } else {
+            circulo.textContent = i;
+          }
+        }
+        for (let i = 1; i <= 2; i++) {
+          const linha = document.getElementById("linha" + i);
+          linha.className = "etapa-linha" + (i < etapa ? " ativa" : "");
+        }
+      }
+
+      function irParaEtapa2() {
+        const email = document.getElementById("email").value.trim();
+        if (!email || !email.includes("@")) {
+          mostrarAlerta("Por favor, informe um e-mail válido.", "erro");
+          return;
+        }
+        document.getElementById("email-exibido").textContent = email;
+        document.getElementById("etapa-1").style.display = "none";
+        document.getElementById("etapa-2").style.display = "block";
+        atualizarEtapas(2);
+        iniciarTimer();
+        mostrarAlerta("Código enviado para " + email, "sucesso");
+      }
+
+      function irParaEtapa3() {
+        const codigo = document.getElementById("codigo").value.trim();
+        if (codigo.length !== 6 || isNaN(codigo)) {
+          mostrarAlerta("Informe o código de 6 dígitos enviado ao seu e-mail.", "erro");
+          return;
+        }
+        document.getElementById("etapa-2").style.display = "none";
+        document.getElementById("etapa-3").style.display = "block";
+        atualizarEtapas(3);
+      }
+
+      function voltarEtapa(etapa) {
+        for (let i = 1; i <= 3; i++) {
+          document.getElementById("etapa-" + i).style.display = "none";
+        }
+        document.getElementById("etapa-" + etapa).style.display = "block";
+        atualizarEtapas(etapa);
+      }
+
+      function redefinirSenha() {
+        const nova = document.getElementById("nova-senha").value;
+        const confirmar = document.getElementById("confirmar-senha").value;
+        if (nova.length < 8) {
+          mostrarAlerta("A senha deve ter pelo menos 8 caracteres.", "erro");
+          return;
+        }
+        if (nova !== confirmar) {
+          mostrarAlerta("As senhas não coincidem.", "erro");
+          return;
+        }
+        document.getElementById("etapa-3").style.display = "none";
+        document.getElementById("tela-sucesso").style.display = "block";
+        document.querySelector(".card-icon").style.display = "none";
+        document.querySelector("h2").style.display = "none";
+        document.querySelector(".card-sub").style.display = "none";
+        document.querySelector(".etapas").style.display = "none";
+        document.getElementById("alerta").className = "alerta";
+      }
+
+      function toggleSenha(id, btn) {
+        const input = document.getElementById(id);
+        if (input.type === "password") {
+          input.type = "text";
+          btn.innerHTML = '<i class="bi bi-eye-slash"></i>';
+        } else {
+          input.type = "password";
+          btn.innerHTML = '<i class="bi bi-eye"></i>';
+        }
+      }
+
+      function verificarForca() {
+        const senha = document.getElementById("nova-senha").value;
+        const wrap = document.getElementById("forca-wrap");
+        const label = document.getElementById("forca-label");
+        const barras = [document.getElementById("b1"), document.getElementById("b2"),
+                        document.getElementById("b3"), document.getElementById("b4")];
+
+        barras.forEach(b => b.className = "forca-barra");
+
+        if (senha.length === 0) { wrap.classList.remove("visivel"); return; }
+        wrap.classList.add("visivel");
+
+        let pontos = 0;
+        if (senha.length >= 8) pontos++;
+        if (/[A-Z]/.test(senha)) pontos++;
+        if (/[0-9]/.test(senha)) pontos++;
+        if (/[^A-Za-z0-9]/.test(senha)) pontos++;
+
+        const classes = ["fraca", "fraca", "media", "forte"];
+        const labels = ["Muito fraca", "Fraca", "Média", "Forte"];
+        for (let i = 0; i < pontos; i++) {
+          barras[i].classList.add(classes[pontos - 1]);
+        }
+        label.textContent = "Força: " + labels[pontos - 1];
+      }
+
+      let timerInterval;
+      function iniciarTimer() {
+        let segundos = 60;
+        const timerEl = document.getElementById("timer");
+        const timerWrap = document.getElementById("timer-reenvio");
+        timerWrap.style.display = "inline";
+        timerEl.textContent = segundos;
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          segundos--;
+          timerEl.textContent = segundos;
+          if (segundos <= 0) {
+            clearInterval(timerInterval);
+            timerWrap.style.display = "none";
+          }
+        }, 1000);
+      }
+
+      function reenviarCodigo() {
+        mostrarAlerta("Código reenviado com sucesso!", "sucesso");
+        iniciarTimer(); 
+      }
+    </script> -->
+        <script src="../assets/scripts/hamburger.js"></script>
+    <script src="../assets/scripts/acessibilidade.js"></script>
+</body>
+</html>

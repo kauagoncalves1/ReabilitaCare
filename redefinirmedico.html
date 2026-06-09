@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Esqueci minha senha – Médico – ReabilitaCare</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Nunito", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+
+      /* ── ESTRUTURA: coluna flex para empurrar footer ao fundo ── */
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: url("../assets/images/imagemfundo.jpeg") no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed;
+        padding-top: 120px;
+        padding-bottom: 40px;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: url("../assets/images/imagemfundo.jpeg") no-repeat center center;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* ── HEADER ── */
+      header {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        z-index: 999;
+        animation: slideDown 0.8s ease;
+      }
+
+      .top-header { padding: 2px 0; background: rgba(255,255,255,0.97); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+      .top-header .interface { display: flex; justify-content: space-between; align-items: center; }
+      .interface { max-width: 1500px; margin: 0 auto; padding: 0 4%; }
+      .logotipo img { width: 90px; transition: 0.3s; }
+      .logotipo img:hover { transform: scale(1.08) rotate(-2deg); }
+      .header-actions { display: flex; align-items: center; gap: 15px; }
+
+      .btn-social a {
+        display: inline-flex; justify-content: center; align-items: center;
+        width: 32px; height: 32px; margin-left: 10px;
+        border-radius: 50%; border: 1.5px solid #016366;
+        color: #016366; font-size: 16px; text-decoration: none; transition: 0.3s;
+      }
+      .btn-social a:hover { background: #00bfff; color: #fff; border-color: #00bfff; transform: translateY(-3px); }
+
+      .area-usuario a {
+        padding: 7px 18px; background: #016366; color: white;
+        border-radius: 30px; text-decoration: none;
+        font-weight: 600; font-size: 0.9rem; transition: 0.3s;
+      }
+      .area-usuario a:hover { background: #00bfff; transform: translateY(-2px); }
+
+      .bottom-header { background: rgba(1,99,102,0.6); backdrop-filter: blur(50px); -webkit-backdrop-filter: blur(50px); }
+      .bottom-header nav ul { list-style: none; display: flex; justify-content: center; }
+      .bottom-header nav ul li a { display: block; padding: 14px 22px; color: white; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+      .bottom-header nav ul li a:hover { background: #00bfff; transform: translateY(-2px); }
+
+      /* ── MAIN: cresce e centraliza o card ── */
+      main {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 140px 20px 60px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── CARD ── */
+      .card {
+        width: 560px;
+        margin-top: -120px;
+        padding: 44px 40px;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.35);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+        animation: fadeUp 0.8s ease;
+        transition: transform 0.3s;
+      }
+      .card:hover { transform: translateY(-4px); }
+
+      .badge-medico {
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+        background: rgba(0,191,255,0.15); border: 1px solid rgba(0,191,255,0.5);
+        color: #00bfff; font-size: 0.78rem; font-weight: 700;
+        letter-spacing: 2px; text-transform: uppercase;
+        padding: 6px 18px; border-radius: 30px;
+        width: fit-content; margin: 0 auto 20px;
+      }
+
+      .card-icon {
+        width: 72px; height: 72px;
+        background: linear-gradient(135deg, #016366, #00bfff);
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 20px; font-size: 1.8rem; color: white;
+        box-shadow: 0 8px 24px rgba(0,191,255,0.35);
+      }
+
+      .card h2 { font-family: "Playfair Display", serif; font-size: 1.75rem; font-weight: 700; color: #016366; text-align: center; margin-bottom: 8px; }
+      .card-sub { text-align: center; color: rgba(0,0,0,0.55); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+      .card-sub span { color: #016366; font-weight: 700; }
+      .divisor-card { height: 1px; background: rgba(1,99,102,0.12); margin-bottom: 24px; border-radius: 2px; }
+
+      /* ── ETAPAS ── */
+      .etapas { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 28px; }
+      .etapa { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+      .etapa-circulo {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: rgba(255,255,255,0.25); color: rgba(0,0,0,0.35);
+        font-size: 0.8rem; font-weight: 700;
+        display: flex; align-items: center; justify-content: center;
+        transition: 0.3s; border: 1.5px solid rgba(255,255,255,0.3);
+      }
+      .etapa-circulo.ativa { background: linear-gradient(135deg,#016366,#00bfff); color: white; border-color: transparent; box-shadow: 0 4px 12px rgba(0,191,255,0.35); }
+      .etapa-circulo.concluida { background: #016366; color: white; border-color: transparent; }
+      .etapa span { font-size: 0.7rem; color: rgba(0,0,0,0.4); font-weight: 600; }
+      .etapa span.ativa { color: #016366; }
+      .etapa-linha { flex: 1; height: 2px; background: rgba(255,255,255,0.3); border-radius: 2px; margin-bottom: 16px; max-width: 60px; }
+      .etapa-linha.ativa { background: linear-gradient(90deg,#016366,#00bfff); }
+
+      /* ── FORMULÁRIO ── */
+      .campo-grupo { display: flex; flex-direction: column; margin-bottom: 18px; }
+      .campo-grupo label { font-size: 0.85rem; font-weight: 700; color: rgba(0,0,0,0.5); margin-bottom: 6px; }
+      .input-wrap { position: relative; display: flex; align-items: center; }
+      .input-wrap i { position: absolute; left: 14px; color: #016366; font-size: 1rem; opacity: 0.6; }
+      .input-wrap input { width: 100%; padding: 12px 14px 12px 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.18); color: rgba(0,0,0,0.78); font-size: 0.95rem; transition: 0.3s; font-family: "Nunito", sans-serif; }
+      .input-wrap input::placeholder { color: rgba(0,0,0,0.35); }
+      .input-wrap input:focus { outline: none; border-color: #00bfff; box-shadow: 0 0 10px rgba(0,191,255,0.4); background: rgba(255,255,255,0.28); }
+
+      .toggle-senha { position: absolute; right: 14px; background: none; border: none; cursor: pointer; color: #016366; font-size: 1rem; opacity: 0.6; transition: 0.2s; padding: 0; }
+      .toggle-senha:hover { opacity: 1; }
+
+      .dica-senha { margin-top: 6px; font-size: 0.78rem; color: rgba(0,0,0,0.45); display: flex; align-items: center; gap: 4px; }
+
+      .forca-wrap { margin-top: 10px; display: none; }
+      .forca-wrap.visivel { display: block; }
+      .forca-label { font-size: 0.78rem; color: rgba(0,0,0,0.45); margin-bottom: 4px; }
+      .forca-barras { display: flex; gap: 4px; }
+      .forca-barra { flex: 1; height: 4px; border-radius: 4px; background: rgba(255,255,255,0.3); transition: 0.3s; }
+      .forca-barra.fraca { background: #e53935; }
+      .forca-barra.media { background: #f5a623; }
+      .forca-barra.forte { background: #016366; }
+
+      /* ── BOTÃO ── */
+      .btn-principal {
+        width: 100%; padding: 14px; margin-top: 8px; border: none;
+        background: linear-gradient(45deg, #016366, #00bfff);
+        color: white; border-radius: 50px; cursor: pointer;
+        font-weight: 700; font-size: 1rem; letter-spacing: 0.3px;
+        transition: 0.3s; box-shadow: 0 6px 24px rgba(0,191,255,0.3);
+        display: flex; align-items: center; justify-content: center; gap: 8px;
+        font-family: "Nunito", sans-serif; text-decoration: none;
+      }
+      .btn-principal:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(0,191,255,0.5); }
+      .btn-principal:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+      /* ── ALERTA ── */
+      .alerta { display: none; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; margin-bottom: 18px; align-items: center; gap: 8px; }
+      .alerta.sucesso { display: flex; background: rgba(81,207,102,0.15); color: #1b5e20; border: 1px solid rgba(81,207,102,0.4); }
+      .alerta.erro { display: flex; background: rgba(255,107,107,0.15); color: #c62828; border: 1px solid rgba(255,107,107,0.4); }
+
+      /* ── DIVISOR ── */
+      .divisor { display: flex; align-items: center; gap: 12px; margin: 18px 0; color: rgba(0,0,0,0.3); font-size: 0.8rem; }
+      .divisor::before, .divisor::after { content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.4); }
+
+      .voltar-login { text-align: center; margin-top: 18px; font-size: 0.88rem; color: rgba(0,0,0,0.45); }
+      .voltar-login a { color: #016366; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s; }
+      .voltar-login a:hover { color: #00bfff; }
+
+      /* ── TELA SUCESSO ── */
+      .tela-sucesso { display: none; text-align: center; animation: fadeUp 0.5s ease both; }
+      .sucesso-icon { width: 72px; height: 72px; background: linear-gradient(135deg,#016366,#00bfff); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 2rem; color: white; box-shadow: 0 8px 24px rgba(0,191,255,0.35); }
+      .tela-sucesso h3 { font-family: "Playfair Display", serif; font-size: 1.4rem; color: #016366; margin-bottom: 10px; }
+      .tela-sucesso p { color: rgba(0,0,0,0.5); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
+
+      /* ── FOOTER ── */
+      .footer {
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(135deg, #012f30 0%, #014547 60%, #016366 100%);
+        color: rgba(255,255,255,0.85);
+      }
+
+      .footer-interface { max-width: 1500px; margin: 0 auto; padding: 0 4%; }
+
+      .footer-topo { padding: 60px 0 44px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .footer-topo .footer-interface { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1.4fr; gap: 48px; }
+
+      .footer-col h4 { font-family: "Playfair Display", serif; font-size: 1.05rem; font-weight: 700; color: #00bfff; margin-bottom: 20px; }
+      .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+      .footer-col ul li a { color: rgba(255,255,255,0.72); text-decoration: none; font-size: 0.92rem; transition: 0.3s; }
+      .footer-col ul li a:hover { color: #00bfff; padding-left: 6px; }
+
+      .footer-brand img { width: 110px; margin-bottom: 14px; filter: brightness(0) invert(1); }
+      .footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.62); line-height: 1.7; max-width: 260px; margin-bottom: 18px; }
+
+      .footer-social { display: flex; gap: 10px; }
+      .footer-social a { display: inline-flex; justify-content: center; align-items: center; width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(0,191,255,0.5); color: #00bfff; font-size: 15px; text-decoration: none; transition: 0.3s; }
+      .footer-social a:hover { background: #00bfff; color: #fff; border-color: #00bfff; transform: translateY(-3px); }
+
+      .footer-contato { display: flex; flex-direction: column; gap: 12px; }
+      .footer-contato li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.88rem; color: rgba(255,255,255,0.68); line-height: 1.5; list-style: none; }
+      .footer-contato li i { color: #00bfff; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0; }
+
+      .footer-bottom { padding: 18px 0; }
+      .footer-bottom .footer-interface { display: flex; justify-content: space-between; align-items: center; }
+      .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.42); }
+
+      /* ── ANIMAÇÕES ── */
+      @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+      @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+      /* ── RESPONSIVO ── */
+      @media (max-width: 500px) {
+        .card { width: 100%; padding: 36px 24px; margin: 0 16px; }
+        .card h2 { font-size: 1.5rem; }
+      }
+      @media (max-width: 900px) {
+        .footer-topo .footer-interface { grid-template-columns: 1fr 1fr; gap: 36px; }
+      }
+      @media (max-width: 580px) {
+        .footer-topo .footer-interface { grid-template-columns: 1fr; gap: 28px; }
+        .footer-bottom .footer-interface { flex-direction: column; gap: 6px; text-align: center; }
+      }
+    </style>
+      <link rel="stylesheet" href="../assets/styles/hamburger.css" />
+</head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <section class="top-header">
+        <div class="interface">
+          <div class="logotipo">
+            <a href="index.html">
+              <img src="../assets/images/logosemfundo.png" alt="Logo ReabilitaCare" width="90" height="auto" loading="lazy" />
+            </a>
+          </div>
+          <div class="header-actions">
+            <div class="btn-social">
+              <a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+                <a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+            <div class="area-usuario">
+              <a href="loginmedico.html">Área do Médico</a>
+            </div>
+          </div>
+        </div>
+      </section>
+  <section class="bottom-header">
+    <div class="interface nav-interface">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i class="bi bi-list" id="navIcon"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+    </header>
+
+    <!-- MAIN: centraliza o card e ocupa o espaço entre header e footer -->
+    <main>
+      <div class="card">
+
+        <div class="badge-medico">
+          <i class="bi bi-shield-plus"></i> Acesso Médico
+        </div>
+
+        <h2 id="card-titulo">Redefinir Acesso</h2>
+        <p class="card-sub" id="card-sub">
+          Doutor(a), sem problemas! Siga os passos abaixo para recuperar o acesso ao seu painel <span>ReabilitaCare</span>.
+        </p>
+
+        <div class="divisor-card"></div>
+
+        <div class="etapas" id="etapas">
+          <div class="etapa">
+            <div class="etapa-circulo ativa" id="circulo1">1</div>
+            <span class="ativa" id="label1">CRM</span>
+          </div>
+          <div class="etapa-linha" id="linha1"></div>
+          <div class="etapa">
+            <div class="etapa-circulo" id="circulo2">2</div>
+            <span id="label2">Código</span>
+          </div>
+          <div class="etapa-linha" id="linha2"></div>
+          <div class="etapa">
+            <div class="etapa-circulo" id="circulo3">3</div>
+            <span id="label3">Nova senha</span>
+          </div>
+        </div>
+
+        <div class="alerta" id="alerta">
+          <i class="bi bi-check-circle-fill"></i>
+          <span id="alerta-texto"></span>
+        </div>
+
+        <!-- ETAPA 1 -->
+        <div id="etapa-1">
+          <div class="campo-grupo">
+            <label for="crm">Número do CRM</label>
+            <div class="input-wrap">
+              <i class="bi bi-card-text"></i>
+              <input type="text" id="crm" name="crm" placeholder="Ex: CRM/SP 123456" maxlength="20" />
+            </div>
+          </div>
+          <div class="campo-grupo">
+            <label for="email">E-mail cadastrado</label>
+            <div class="input-wrap">
+              <i class="bi bi-envelope"></i>
+              <input type="email" id="email" name="email" placeholder="seu@email.com.br" />
+            </div>
+          </div>
+          <button class="btn-principal" onclick="irParaEtapa2()">
+            <i class="bi bi-send"></i> Enviar código de verificação
+          </button>
+          <div class="divisor">ou</div>
+          <div class="voltar-login">
+            <a href="loginmedico.html"><i class="bi bi-arrow-left"></i> Voltar para o login médico</a>
+          </div>
+        </div>
+
+        <!-- ETAPA 2 -->
+        <div id="etapa-2" style="display:none">
+          <p style="font-size:0.86rem;color:rgba(0,0,0,0.5);text-align:center;margin-bottom:18px;line-height:1.6;">
+            Enviamos um código de 6 dígitos para o e-mail vinculado ao CRM <strong id="crm-exibido" style="color:#016366;"></strong>. Verifique sua caixa de entrada.
+          </p>
+          <div class="campo-grupo">
+            <label for="codigo">Código de verificação</label>
+            <div class="input-wrap">
+              <i class="bi bi-key"></i>
+              <input type="text" id="codigo" name="codigo" placeholder="000000" maxlength="6" style="letter-spacing:6px;font-size:1.2rem;text-align:center;" />
+            </div>
+          </div>
+          <div style="text-align:center;margin-bottom:14px;">
+            <span style="font-size:0.82rem;color:rgba(0,0,0,0.4);">Não recebeu? </span>
+            <a href="#" onclick="reenviarCodigo()" style="font-size:0.82rem;color:#016366;font-weight:700;text-decoration:none;">Reenviar código</a>
+            <span id="timer-reenvio" style="font-size:0.82rem;color:rgba(0,0,0,0.4);display:none;">(aguarde <span id="timer">60</span>s)</span>
+          </div>
+          <button class="btn-principal" onclick="irParaEtapa3()">
+            <i class="bi bi-check2"></i> Verificar código
+          </button>
+          <div class="voltar-login" style="margin-top:14px;">
+            <a href="#" onclick="voltarEtapa(1)"><i class="bi bi-arrow-left"></i> Voltar</a>
+          </div>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div id="etapa-3" style="display:none">
+          <div class="campo-grupo">
+            <label for="nova-senha">Nova senha</label>
+            <div class="input-wrap">
+              <i class="bi bi-lock"></i>
+              <input type="password" id="nova-senha" name="nova-senha" placeholder="Mínimo 8 caracteres" oninput="verificarForca()" />
+              <button class="toggle-senha" type="button" onclick="toggleSenha('nova-senha', this)"><i class="bi bi-eye"></i></button>
+            </div>
+            <div class="forca-wrap" id="forca-wrap">
+              <div class="forca-label" id="forca-label">Força da senha</div>
+              <div class="forca-barras">
+                <div class="forca-barra" id="b1"></div>
+                <div class="forca-barra" id="b2"></div>
+                <div class="forca-barra" id="b3"></div>
+                <div class="forca-barra" id="b4"></div>
+              </div>
+            </div>
+            <span class="dica-senha"><i class="bi bi-info-circle"></i> Use letras maiúsculas, números e símbolos.</span>
+          </div>
+          <div class="campo-grupo">
+            <label for="confirmar-senha">Confirmar nova senha</label>
+            <div class="input-wrap">
+              <i class="bi bi-lock-fill"></i>
+              <input type="password" id="confirmar-senha" name="confirmar-senha" placeholder="Repita a senha" />
+              <button class="toggle-senha" type="button" onclick="toggleSenha('confirmar-senha', this)"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <button class="btn-principal" onclick="redefinirSenha()">
+            <i class="bi bi-shield-check"></i> Redefinir senha
+          </button>
+          <div class="voltar-login" style="margin-top:14px;">
+            <a href="#" onclick="voltarEtapa(2)"><i class="bi bi-arrow-left"></i> Voltar</a>
+          </div>
+        </div>
+
+        <!-- TELA SUCESSO -->
+        <div class="tela-sucesso" id="tela-sucesso">
+          <div class="sucesso-icon"><i class="bi bi-check-lg"></i></div>
+          <h3>Senha redefinida, Doutor!</h3>
+          <p>Sua senha foi alterada com sucesso. Você já pode acessar o painel médico com suas novas credenciais.</p>
+          <a href="loginmedico.html" class="btn-principal">
+            <i class="bi bi-box-arrow-in-right"></i> Voltar ao login médico
+          </a>
+        </div>
+
+      </div>
+    </main>
+
+    
+    <script>
+      function mostrarAlerta(msg, tipo) {
+        const alerta = document.getElementById("alerta");
+        const texto = document.getElementById("alerta-texto");
+        alerta.className = "alerta " + tipo;
+        alerta.querySelector("i").className = tipo === "sucesso" ? "bi bi-check-circle-fill" : "bi bi-exclamation-circle-fill";
+        texto.textContent = msg;
+        setTimeout(() => { alerta.className = "alerta"; }, 4000);
+      }
+
+      function atualizarEtapas(etapa) {
+        for (let i = 1; i <= 3; i++) {
+          const circulo = document.getElementById("circulo" + i);
+          const label = document.getElementById("label" + i);
+          circulo.className = "etapa-circulo";
+          label.className = "";
+          if (i < etapa) {
+            circulo.classList.add("concluida");
+            circulo.innerHTML = '<i class="bi bi-check"></i>';
+          } else if (i === etapa) {
+            circulo.classList.add("ativa");
+            circulo.textContent = i;
+            label.classList.add("ativa");
+          } else {
+            circulo.textContent = i;
+          }
+        }
+        for (let i = 1; i <= 2; i++) {
+          document.getElementById("linha" + i).className = "etapa-linha" + (i < etapa ? " ativa" : "");
+        }
+      }
+
+      function irParaEtapa2() {
+        const crm = document.getElementById("crm").value.trim();
+        const email = document.getElementById("email").value.trim();
+        if (!crm) { mostrarAlerta("Por favor, informe seu CRM.", "erro"); return; }
+        if (!email || !email.includes("@")) { mostrarAlerta("Por favor, informe um e-mail válido.", "erro"); return; }
+        document.getElementById("crm-exibido").textContent = crm;
+        document.getElementById("etapa-1").style.display = "none";
+        document.getElementById("etapa-2").style.display = "block";
+        atualizarEtapas(2);
+        iniciarTimer();
+        mostrarAlerta("Código enviado para o e-mail vinculado ao " + crm, "sucesso");
+      }
+
+      function irParaEtapa3() {
+        const codigo = document.getElementById("codigo").value.trim();
+        if (codigo.length !== 6 || isNaN(codigo)) { mostrarAlerta("Informe o código de 6 dígitos enviado ao seu e-mail.", "erro"); return; }
+        document.getElementById("etapa-2").style.display = "none";
+        document.getElementById("etapa-3").style.display = "block";
+        atualizarEtapas(3);
+      }
+
+      function voltarEtapa(etapa) {
+        for (let i = 1; i <= 3; i++) document.getElementById("etapa-" + i).style.display = "none";
+        document.getElementById("etapa-" + etapa).style.display = "block";
+        atualizarEtapas(etapa);
+      }
+
+      function redefinirSenha() {
+        const nova = document.getElementById("nova-senha").value;
+        const confirmar = document.getElementById("confirmar-senha").value;
+        if (nova.length < 8) { mostrarAlerta("A senha deve ter pelo menos 8 caracteres.", "erro"); return; }
+        if (nova !== confirmar) { mostrarAlerta("As senhas não coincidem.", "erro"); return; }
+        document.getElementById("etapa-3").style.display = "none";
+        document.getElementById("tela-sucesso").style.display = "block";
+        document.getElementById("card-icon").style.display = "none";
+        document.getElementById("card-titulo").style.display = "none";
+        document.getElementById("card-sub").style.display = "none";
+        document.getElementById("etapas").style.display = "none";
+        document.querySelector(".divisor-card").style.display = "none";
+        document.getElementById("alerta").className = "alerta";
+      }
+
+      function toggleSenha(id, btn) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+        btn.innerHTML = input.type === "password" ? '<i class="bi bi-eye"></i>' : '<i class="bi bi-eye-slash"></i>';
+      }
+
+      function verificarForca() {
+        const senha = document.getElementById("nova-senha").value;
+        const wrap = document.getElementById("forca-wrap");
+        const label = document.getElementById("forca-label");
+        const barras = ["b1","b2","b3","b4"].map(id => document.getElementById(id));
+        barras.forEach(b => b.className = "forca-barra");
+        if (!senha.length) { wrap.classList.remove("visivel"); return; }
+        wrap.classList.add("visivel");
+        let pontos = 0;
+        if (senha.length >= 8) pontos++;
+        if (/[A-Z]/.test(senha)) pontos++;
+        if (/[0-9]/.test(senha)) pontos++;
+        if (/[^A-Za-z0-9]/.test(senha)) pontos++;
+        const classes = ["fraca","fraca","media","forte"];
+        const labels = ["Muito fraca","Fraca","Média","Forte"];
+        for (let i = 0; i < pontos; i++) barras[i].classList.add(classes[pontos - 1]);
+        label.textContent = "Força: " + labels[pontos - 1];
+      }
+
+      let timerInterval;
+      function iniciarTimer() {
+        let segundos = 60;
+        const timerEl = document.getElementById("timer");
+        const timerWrap = document.getElementById("timer-reenvio");
+        timerWrap.style.display = "inline";
+        timerEl.textContent = segundos;
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          segundos--;
+          timerEl.textContent = segundos;
+          if (segundos <= 0) { clearInterval(timerInterval); timerWrap.style.display = "none"; }
+        }, 1000);
+      }
+
+      function reenviarCodigo() {
+        mostrarAlerta("Código reenviado com sucesso!", "sucesso");
+        iniciarTimer();
+      }
+    </script>
+        <script src="../assets/scripts/hamburger.js"></script>
+    <script src="../assets/scripts/acessibilidade.js"></script>
+</body>
+</html>

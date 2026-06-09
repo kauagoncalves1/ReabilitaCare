@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro Médico – ReabilitaCare</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="../assets/styles/medico.css" />
+      <link rel="stylesheet" href="../assets/styles/hamburger.css" />
+</head>
+  <body>
+
+
+<!-- HEADER -->
+    <header>
+      <section class="top-header">
+        <div class="interface">
+          <div class="logotipo">
+            <a href="index.html">
+              <img
+                src="../assets/images/logosemfundo.png"
+                alt="Logo ReabilitaCare"
+              />
+            </a>
+          </div>
+          <div style="display: flex; align-items: center; gap: 15px">
+            <div class="btn-social">
+              <a href="https://www.instagram.com/accounts/login/?next=%2Freabilitaacare%2F&source=omni_redirect"><i class="bi bi-instagram"></i></a>
+              <a href="#"><i class="bi bi-whatsapp"></i></a>
+              <a href="#"><i class="bi bi-facebook"></i></a>
+            </div>
+            <div class="area-usuario">
+              <a href="login.html" id="btnLogin">Entrar</a>
+              <div id="usuarioLogado">
+                <span id="nomeUsuario"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+  <section class="bottom-header">
+    <div class="interface nav-interface">
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i class="bi bi-list" id="navIcon"></i>
+      </button>
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="sobre.html">Sobre</a></li>
+          <li><a href="agendamentos.html">Agendamentos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+    </header>
+
+
+<!-- FORMULÁRIO -->
+<main class="registro-main">
+  <div class="registro-card">
+    <h2>Cadastro de Médico</h2>
+    <p class="registro-sub">Preencha seus dados profissionais para acessar a plataforma</p>
+
+    <form id="formMedico">
+
+      <!-- DADOS PESSOAIS -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label"> Dados Pessoais</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label for="nome">Nome Completo <span class="required">*</span></label>
+          <input type="text" id="nome" name="nome" placeholder="Dr. João da Silva" required />
+        </div>
+        <div class="campo-grupo">
+          <label for="email">E-mail <span class="required">*</span></label>
+          <input type="email" id="email" name="email" placeholder="joao.silva@clinica.com.br" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label for="cpf">CPF <span class="required">*</span></label>
+          <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required />
+        </div>
+        <div class="campo-grupo">
+          <label for="telefone">Telefone / WhatsApp <span class="required">*</span></label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" maxlength="15" required />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label for="nascimento">Data de Nascimento <span class="required">*</span></label>
+          <input type="date" id="nascimento" name="nascimento" required />
+        </div>
+        <div class="campo-grupo">
+          <label>Gênero</label>
+          <div class="radio-group">
+            <label class="radio-label"><input type="radio" name="genero" value="masculino" /> Masculino</label>
+            <label class="radio-label"><input type="radio" name="genero" value="feminino" /> Feminino</label>
+            <label class="radio-label"><input type="radio" name="genero" value="outro" /> Outro</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- DADOS PROFISSIONAIS -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label"> Dados Profissionais</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label>CRM <span class="required">*</span></label>
+          <div class="crm-row">
+            <div class="campo-grupo">
+              <input type="text" name="crm_numero" placeholder="Número do CRM" maxlength="8" required />
+            </div>
+            <div class="campo-grupo">
+              <div class="select-wrapper">
+                <select name="crm_uf" required>
+                  <option value="" disabled selected>UF</option>
+                  <option>AC</option><option>AL</option><option>AM</option><option>AP</option>
+                  <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                  <option>GO</option><option>MA</option><option>MG</option><option>MS</option>
+                  <option>MT</option><option>PA</option><option>PB</option><option>PE</option>
+                  <option>PI</option><option>PR</option><option>RJ</option><option>RN</option>
+                  <option>RO</option><option>RR</option><option>RS</option><option>SC</option>
+                  <option>SE</option><option>SP</option><option>TO</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="campo-grupo">
+          <label for="rqe">RQE (Residência Médica)</label>
+          <input type="text" id="rqe" name="rqe" placeholder="Número do RQE (opcional)" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label for="tipo_atuacao">Tipo de Atuação <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="tipo_atuacao" name="tipo_atuacao" required>
+              <option value="" disabled selected>Selecione</option>
+              <option>Clínica Geral</option>
+              <option>Especialista</option>
+              <option>Residente</option>
+              <option>Docente / Pesquisador</option>
+            </select>
+          </div>
+        </div>
+        <div class="campo-grupo">
+          <label for="formacao">Faculdade de Formação <span class="required">*</span></label>
+          <input type="text" id="formacao" name="formacao" placeholder="Nome da instituição" required />
+        </div>
+      </div>
+
+      <div class="campo-grupo">
+        <label>Especialidades</label>
+        <div class="checkbox-grid">
+          <label class="checkbox-item"><input type="checkbox" name="esp" value="Cardiologia" /> Cardiologia</label>
+          <label class="checkbox-item"><input type="checkbox" name="esp" value="Fisioterapeuta" />Fisioterapeuta</label>
+          <label class="checkbox-item"><input type="checkbox" name="esp" value="Psicologia" />Psicologia</label>
+          <label class="checkbox-item"><input type="checkbox" name="esp" value="Psiquiatria" /> Psiquiatria</label>
+          <label class="checkbox-item"><input type="checkbox" name="esp" value="Clinico Geral" />Clinico Geral</label>
+        </div>
+      </div>
+
+      <div class="campo-grupo">
+        <label for="bio">Sobre você / Mini Bio</label>
+        <textarea id="bio" name="bio" placeholder="Breve descrição sobre sua trajetória profissional, área de atuação e diferenciais..."></textarea>
+      </div>
+
+      <!-- DOCUMENTOS -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label"> Documentos</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label>Foto de Perfil</label>
+          <div class="upload-area">
+            <input type="file" accept="image/*" />
+            <div class="upload-icon"><i class="bi bi-image"></i></div>
+            <p><strong>Clique para enviar</strong> ou arraste a imagem<br/>JPG, PNG — máx. 5MB</p>
+          </div>
+        </div>
+        <div class="campo-grupo">
+          <label>Diploma / Certificado (CRM)</label>
+          <div class="upload-area">
+            <input type="file" accept=".pdf,image/*" />
+            <div class="upload-icon"><i class="bi bi-file-earmark-medical"></i></div>
+            <p><strong>Clique para enviar</strong> ou arraste o arquivo<br/>PDF, JPG, PNG — máx. 10MB</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACESSO -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label"> Acesso à Plataforma</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="campo-grupo">
+          <label for="senha">Senha <span class="required">*</span></label>
+          <input type="password" id="senha" name="senha" placeholder="Mínimo 8 caracteres" minlength="8" required />
+        </div>
+        <div class="campo-grupo">
+          <label for="confirmar_senha">Confirmar Senha <span class="required">*</span></label>
+          <input type="password" id="confirmar_senha" name="confirmar_senha" placeholder="Repita a senha" required />
+        </div>
+      </div>
+
+      <div class="terms-row">
+        <input type="checkbox" id="terms" required />
+        <label for="terms">
+          Li e concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a> da plataforma. Confirmo que as informações fornecidas são verdadeiras e assumo responsabilidade por sua veracidade.
+        </label>
+      </div>
+
+      <button type="submit">Finalizar Cadastro</button>
+
+      <div class="success-msg" id="successMsg">
+        ✅ Cadastro enviado com sucesso! Em breve você receberá um e-mail de confirmação.
+      </div>
+
+      <p class="login-link">Já tem uma conta? <a href="login.html">Entrar</a></p>
+    </form>
+  </div>
+</main>
+  
+<script>
+  // Máscara CPF
+  document.getElementById("cpf").addEventListener("input", function () {
+    let v = this.value.replace(/\D/g, "").slice(0, 11);
+    v = v.replace(/(\d{3})(\d)/, "$1.$2")
+         .replace(/(\d{3})(\d)/, "$1.$2")
+         .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    this.value = v;
+  });
+
+  // Máscara Telefone
+  document.getElementById("telefone").addEventListener("input", function () {
+    let v = this.value.replace(/\D/g, "").slice(0, 11);
+    if (v.length > 10) v = v.replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+    else if (v.length > 6) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+    else if (v.length > 2) v = v.replace(/(\d{2})(\d{0,5})/, "($1) $2");
+    this.value = v;
+  });
+
+  // Submit
+  document.getElementById("formMedico").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const senha = document.getElementById("senha").value;
+    const confirmar = document.getElementById("confirmar_senha").value;
+    if (senha !== confirmar) {
+      alert("As senhas não coincidem. Por favor, verifique.");
+      return;
+    }
+    if (!document.getElementById("terms").checked) {
+      alert("Por favor, aceite os Termos de Uso para continuar.");
+      return;
+    }
+
+    const btn = this.querySelector("button[type='submit']");
+    btn.textContent = "Enviando...";
+    btn.disabled = true;
+
+    setTimeout(() => {
+      document.getElementById("successMsg").classList.add("show");
+      btn.textContent = "Cadastro Enviado ✓";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1800);
+  });
+</script>
+
+
+        <script src="../assets/scripts/hamburger.js"></script>
+    <script src="../assets/scripts/acessibilidade.js"></script>
+</body>
+</html>
