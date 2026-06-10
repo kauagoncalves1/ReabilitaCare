@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<!-- Ícones -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Nunito:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- CSS -->
+<link href="/assets/styles/index.css" rel="stylesheet"/>
+<title>ReabilitaCare</title>
+<link href="/assets/styles/nav-mobile.css" rel="stylesheet"/></head>
+<body>
+<header>
+<!-- TOPO -->
+<section class="top-header">
+<div class="interface">
+<!-- LOGO -->
+<div class="logotipo">
+<a href="index.html">
+<img alt="Logo" src="/assets/images/logosemfundo.png"/>
+</a>
+</div>
+<!-- DIREITA (SOCIAL + USUÁRIO) -->
+<div style="display: flex; align-items: center; gap: 15px">
+<!-- REDES SOCIAIS -->
+<div class="btn-social">
+<a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+<a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+<a href="#"><i class="bi bi-facebook"></i></a>
+</div>
+<!-- USUÁRIO -->
+<div class="area-usuario">
+<a href="redirecionamento.html" id="btnLogin">Entrar</a>
+<div class="usuario-logado" id="usuarioLogado">
+<span id="nomeUsuario"></span>
+<button onclick="logout()">Sair</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- MENU -->
+<section class="bottom-header">
+<div class="interface">
+<button aria-expanded="false" aria-label="Abrir menu" class="nav-toggle">
+<div class="bars">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</div>
+</button><nav>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="sobre.html">Sobre</a></li>
+<li><a href="agendamentos.html">Agendamentos</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</div>
+</section>
+</header>
+<!-- ===== HERO ===== -->
+<section class="hero">
+<!-- Imagem de fundo (médico + paciente) -->
+<!-- <img src="/assets/images/ricardo-foto.jpg" alt=""> -->
+<div class="hero-bg"></div>
+<div class="hero-content">
+<span class="hero-tag">Reabilitação &amp; Cuidado</span>
+<h1 class="hero-title">
+          Transformando<br/><span>Vidas</span> com<br/>Dedicação
+        </h1>
+<p class="hero-desc">
+          Cuidamos de você com atenção, tecnologia e humanidade. Nossa equipe
+          está comprometida em restaurar seu bem-estar e qualidade de vida em
+          cada etapa do tratamento.
+        </p>
+<a class="btn-saiba" href="sobre.html">
+          Saiba Mais <i class="bi bi-arrow-right"></i>
+</a>
+</div>
+</section>
+<!-- ===== DEPOIMENTO ===== -->
+<section class="depoimento-section">
+<h2 class="depoimento-title">O que nossos pacientes dizem</h2>
+<p class="depoimento-subtitle">
+        Histórias reais de quem transformou sua vida com a ReabilitaCare
+      </p>
+<div class="depoimento-card">
+<!-- Foto da idosa -->
+<div class="depoimento-foto-wrap">
+<img alt="" src="/assets/images/camila-foto.jpg"/>
+<div class="depoimento-foto-overlay"></div>
+</div>
+<!-- Texto do depoimento -->
+<div class="depoimento-corpo">
+<div class="aspas">"</div>
+<p class="depoimento-texto">
+            Após sofrer uma queda que me deixou sem mobilidade, achei que nunca
+            mais conseguiria viver de forma independente. A equipe da
+            ReabilitaCare me recebeu com tanto carinho que me senti acolhida
+            desde o primeiro dia. Com sessões de fisioterapia e acompanhamento
+            personalizado, em seis meses já estava caminhando sozinha novamente.
+            Hoje, volto a cuidar do meu jardim e brincar com meus netos. Sou
+            infinitamente grata!
+          </p>
+<div class="estrelas">★★★★★</div>
+<div class="depoimento-nome">
+<div class="depoimento-linha"></div>
+<div class="depoimento-info">
+<strong>Maria Aparecida dos Santos</strong>
+<span>42 anos · Rio de Janeiro, RJ</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="footer">
+<div class="footer-topo">
+<div class="footer-interface">
+<!-- LOGO + DESCRIÇÃO -->
+<div class="footer-col footer-brand">
+<img alt="Logo ReabilitaCare" src="/assets/images/logosemfundo.png">
+<p>Cuidando de você com atenção, tecnologia e humanidade. Sua reabilitação começa aqui.</p>
+<div class="footer-social">
+<a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+<a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+<a href="#"><i class="bi bi-facebook"></i></a>
+</div>
+</img></div>
+<!-- LINKS -->
+<div class="footer-col">
+<h4>Navegação</h4>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="sobre.html">Sobre</a></li>
+<li><a href="agendamentos.html">Agendamentos</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</div>
+<!-- SERVIÇOS -->
+<div class="footer-col">
+<h4>Serviços</h4>
+<ul>
+<li><a href="#">Fisioterapia</a></li>
+<li><a href="#">Ortopedia e Traumatologia</a></li>
+<li><a href="#">Reabilitação Pós-Cirúrgica</a></li>
+<li><a href="#">Psicologia</a></li>
+<li><a href="#">Cardiologia</a></li>
+<li><a href="#">Combate ao Tabagismo</a></li>
+<li><a href="#">Clínica Geral</a></li>
+<li><a href="#">Psiquiatria</a></li>
+</ul></div>
+<!-- CONTATO -->
+<div class="footer-col">
+<h4>Contato</h4>
+<ul class="footer-contato">
+<li><i class="bi bi-geo-alt-fill"></i> Rua Cesário de Melo, 2541 — Rio de Janeiro, RJ</li>
+<li><i class="bi bi-telephone-fill"></i> (21) 99999-9999</li>
+<li><i class="bi bi-envelope-fill"></i> contato@reabilitacare.com.br</li>
+<li><i class="bi bi-clock-fill"></i> Seg–Sex: 8h às 19h</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- RODAPÉ INFERIOR -->
+<div class="footer-bottom">
+<div class="footer-interface">
+<p>© 2026 ReabilitaCare. Todos os direitos reservados.</p>
+<p>Desenvolvido com carinho para sua saúde</p>
+</div>
+</div>
+</footer>
+<!-- SCRIPT -->
+<script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const usuario = localStorage.getItem("usuario");
+
+        const btnLogin = document.getElementById("btnLogin");
+        const usuarioLogado = document.getElementById("usuarioLogado");
+        const nomeUsuario = document.getElementById("nomeUsuario");
+
+        if (usuario) {
+          btnLogin.style.display = "none";
+          usuarioLogado.style.display = "flex";
+          nomeUsuario.innerText = "Olá, " + usuario;
+        } else {
+          usuarioLogado.style.display = "none";
+        }
+      });
+
+      function logout() {
+        localStorage.removeItem("usuario");
+        location.reload();
+      }
+    </script>
+<script src="/assets/scripts/acessibilidade.js"></script>
+<script src="/assets/scripts/nav-mobile.js"></script></body>
+</html>

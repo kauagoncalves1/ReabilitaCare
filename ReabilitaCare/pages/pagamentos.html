@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pagamento – ReabilitaCare</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/styles/pagamentos.css" rel="stylesheet"/>
+<link href="/assets/styles/nav-mobile.css" rel="stylesheet"/></head>
+<body>
+<!-- HEADER -->
+<header>
+<section class="top-header">
+<div class="interface">
+<div class="logotipo">
+<a href="index.html">
+<img alt="Logo ReabilitaCare" src="/assets/images/logosemfundo.png"/>
+</a>
+</div>
+<div style="display: flex; align-items: center; gap: 15px">
+<div class="btn-social">
+<a href="#"><i class="bi bi-instagram"></i></a>
+<a href="#"><i class="bi bi-whatsapp"></i></a>
+<a href="#"><i class="bi bi-facebook"></i></a>
+</div>
+<div class="area-usuario">
+<a href="redirecionamento.html" id="btnLogin">Entrar</a>
+<div id="usuarioLogado">
+<span id="nomeUsuario"></span>
+<button onclick="logout()">Sair</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="bottom-header">
+<div class="interface">
+<button aria-expanded="false" aria-label="Abrir menu" class="nav-toggle">
+<div class="bars">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</div>
+</button><nav>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="sobre.html">Sobre</a></li>
+<li><a href="agendamentos.html">Agendamentos</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</div>
+</section>
+</header>
+<!-- CONTEÚDO -->
+<main class="pagamento-main">
+<div class="pagamento-card">
+<div class="pagamento-topo">
+<div class="pagamento-icone">
+<i class="bi bi-shield-lock-fill"></i>
+</div>
+<h2>Finalizar Pagamento</h2>
+<p>Ambiente seguro e criptografado</p>
+</div>
+<form id="formPagamento">
+<!-- MÉTODOS -->
+<div class="metodos-label">Forma de pagamento</div>
+<div class="payment-methods">
+<label>
+<input checked="" name="method" type="radio" value="credito"/>
+<div class="method-option">
+<i class="bi bi-credit-card-fill"></i>
+<span>Crédito</span>
+</div>
+</label>
+<label>
+<input name="method" type="radio" value="debito"/>
+<div class="method-option">
+<i class="bi bi-credit-card-2-front-fill"></i>
+<span>Débito</span>
+</div>
+</label>
+<label>
+<input name="method" type="radio" value="pix"/>
+<div class="method-option">
+<i class="bi bi-qr-code"></i>
+<span>Pix</span>
+</div>
+</label>
+</div>
+<!-- CAMPOS -->
+<div class="campo-grupo">
+<label for="nomeCartao">Nome no cartão</label>
+<input id="nomeCartao" placeholder="Ex: JOAO DA SILVA" required="" type="text"/>
+</div>
+<div class="campo-grupo">
+<label for="numeroCartao">Número do cartão</label>
+<input id="numeroCartao" maxlength="19" placeholder="0000 0000 0000 0000" required="" type="text"/>
+</div>
+<div class="form-row">
+<div class="campo-grupo">
+<label for="validade">Validade</label>
+<input id="validade" maxlength="5" placeholder="MM/AA" required="" type="text"/>
+</div>
+<div class="campo-grupo">
+<label for="cvv">CVV</label>
+<input id="cvv" maxlength="3" placeholder="000" required="" type="text"/>
+</div>
+</div>
+<div class="campo-grupo">
+<label for="cpf">CPF do titular</label>
+<input id="cpf" maxlength="14" placeholder="000.000.000-00" required="" type="text"/>
+</div>
+<button class="btn-pay" type="submit">
+<i class="bi bi-lock-fill"></i> Pagar Agora
+          </button>
+<div class="seguranca">
+<i class="bi bi-shield-check"></i>
+<span>Seus dados estão protegidos com criptografia SSL</span>
+</div>
+<a class="btn-voltar" href="agendamentos.html">
+<i class="bi bi-arrow-left"></i> Voltar para agendamentos
+          </a>
+</form>
+</div>
+</main>
+<script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const usuario = localStorage.getItem("usuario");
+        const btnLogin = document.getElementById("btnLogin");
+        const usuarioLogado = document.getElementById("usuarioLogado");
+        const nomeUsuario = document.getElementById("nomeUsuario");
+        if (usuario) {
+          btnLogin.style.display = "none";
+          usuarioLogado.style.display = "flex";
+          nomeUsuario.innerText = "Olá, " + usuario;
+        } else {
+          usuarioLogado.style.display = "none";
+        }
+      });
+
+      function logout() {
+        localStorage.removeItem("usuario");
+        location.reload();
+      }
+
+      // Máscaras
+      document
+        .getElementById("numeroCartao")
+        .addEventListener("input", function () {
+          let v = this.value.replace(/\D/g, "").slice(0, 16);
+          v = v.replace(/(\d{4})(?=\d)/g, "$1 ");
+          this.value = v;
+        });
+
+      document
+        .getElementById("validade")
+        .addEventListener("input", function () {
+          let v = this.value.replace(/\D/g, "").slice(0, 4);
+          if (v.length >= 3) v = v.slice(0, 2) + "/" + v.slice(2);
+          this.value = v;
+        });
+
+      document.getElementById("cpf").addEventListener("input", function () {
+        let v = this.value.replace(/\D/g, "").slice(0, 11);
+        v = v
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        this.value = v;
+      });
+
+      document
+        .getElementById("formPagamento")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const btn = this.querySelector(".btn-pay");
+          btn.innerHTML =
+            '<i class="bi bi-hourglass-split"></i> Processando...';
+          btn.disabled = true;
+          setTimeout(() => {
+            alert("Pagamento confirmado! Obrigado.");
+            window.location.href = "index.html";
+          }, 2200);
+        });
+    </script>
+<script src="/assets/scripts/acessibilidade.js"></script>
+<script src="/assets/scripts/nav-mobile.js"></script></body>
+</html>

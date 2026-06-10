@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/pages/index.html" },
+    { "source": "/sobre", "destination": "/pages/sobre.html" },
+    { "source": "/agendamentos", "destination": "/pages/agendamentos.html" },
+    { "source": "/contato", "destination": "/pages/contato.html" },
+    { "source": "/login", "destination": "/pages/login.html" }
+  ]
+}

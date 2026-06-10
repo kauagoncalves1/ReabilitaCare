@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Escolha seu perfil – ReabilitaCare</title>
+<link href="/assets/styles/redirecionamento.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/styles/nav-mobile.css" rel="stylesheet"/></head>
+<body>
+<!-- HEADER -->
+<header>
+<section class="top-header">
+<div class="interface">
+<div class="logotipo">
+<a href="index.html">
+<img alt="Logo ReabilitaCare" height="auto" loading="lazy" src="/assets/images/logosemfundo.png" width="90"/>
+</a>
+</div>
+<div class="header-actions">
+<div class="btn-social">
+<a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+<a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+<a href="#"><i class="bi bi-facebook"></i></a>
+</div>
+</div>
+</div>
+</section>
+<section class="bottom-header">
+<div class="interface">
+<button aria-expanded="false" aria-label="Abrir menu" class="nav-toggle">
+<div class="bars">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</div>
+</button><nav>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="sobre.html">Sobre</a></li>
+<li><a href="agendamentos.html">Agendamentos</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</div>
+</section>
+</header>
+<!-- ÁREA CENTRAL -->
+<div class="pagina-meio">
+<div class="perfil-card" role="main">
+<h2>Como você quer entrar?</h2>
+<p class="sub">Selecione o seu perfil para continuar</p>
+<div aria-label="Selecione seu perfil" class="opcoes" role="group">
+<div aria-checked="false" class="opcao" data-href="loginmedico.html?perfil=medico" id="opcao-medico" role="radio" tabindex="0">
+<span aria-hidden="true" class="check"><i class="bi bi-check-lg"></i></span>
+<i aria-hidden="true" class="bi bi-person-badge opcao-icone"></i>
+<span class="opcao-titulo">Médico</span>
+<span class="opcao-desc">Acesso ao painel clínico e prontuários</span>
+</div>
+<div aria-checked="false" class="opcao" data-href="login.html?perfil=paciente" id="opcao-paciente" role="radio" tabindex="0">
+<span aria-hidden="true" class="check"><i class="bi bi-check-lg"></i></span>
+<i aria-hidden="true" class="bi bi-heart-pulse opcao-icone"></i>
+<span class="opcao-titulo">Paciente</span>
+<span class="opcao-desc">Consulte seus agendamentos e histórico</span>
+</div>
+</div>
+<button aria-disabled="true" class="btn-continuar" disabled="" id="btn-continuar">
+          Continuar <i class="bi bi-arrow-right-short" style="font-size:1.1rem;vertical-align:middle;"></i>
+</button>
+</div>
+<!-- FOOTER -->
+<!--<footer class="footer">
+      <div class="footer-topo">
+        <div class="footer-interface">
+
+          <div class="footer-col footer-brand">
+            <img src="/assets/images/logosemfundo.png" alt="Logo ReabilitaCare" loading="lazy" />
+            <p>Cuidando de você com atenção, tecnologia e humanidade. Sua reabilitação começa aqui.</p>
+            <div class="footer-social">
+              <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+              <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h4>Navegação</h4>
+            <ul>
+              <li><a href="index.html">Início</a></li>
+              <li><a href="sobre.html">Sobre</a></li>
+              <li><a href="agendamentos.html">Agendamentos</a></li>
+              <li><a href="contato.html">Contato</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Serviços</h4>
+            <ul>
+              <li><a href="#">Fisioterapia Ortopédica</a></li>
+              <li><a href="#">Osteopatia</a></li>
+              <li><a href="#">Reabilitação Pós-Cirúrgica</a></li>
+              <li><a href="#">Psicologia</a></li>
+              <li><a href="#">Cardiologia</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Contato</h4>
+            <ul class="footer-contato">
+              <li><i class="bi bi-geo-alt-fill"></i> Av. Principal, 1234 — Rio de Janeiro, RJ</li>
+              <li><i class="bi bi-telephone-fill"></i> (21) 99999-9999</li>
+              <li><i class="bi bi-envelope-fill"></i> contato@reabilitacare.com.br</li>
+              <li><i class="bi bi-clock-fill"></i> Seg–Sex: 8h às 19h</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-interface">
+          <p>© 2026 ReabilitaCare. Todos os direitos reservados.</p>
+          <p>Desenvolvido com carinho para sua saúde</p>
+        </div>
+      </div>
+    </footer> -->
+<script>
+      const opcoes = document.querySelectorAll(".opcao");
+      const btnContinuar = document.getElementById("btn-continuar");
+      let perfilSelecionado = null;
+
+      function selecionar(el) {
+        opcoes.forEach(o => { o.classList.remove("selecionado"); o.setAttribute("aria-checked", "false"); });
+        el.classList.add("selecionado");
+        el.setAttribute("aria-checked", "true");
+        perfilSelecionado = el.dataset.href;
+        btnContinuar.classList.add("ativo");
+        btnContinuar.disabled = false;
+        btnContinuar.setAttribute("aria-disabled", "false");
+      }
+
+      opcoes.forEach(opcao => {
+        opcao.addEventListener("click", () => selecionar(opcao));
+        opcao.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selecionar(opcao); }
+        });
+      });
+
+      btnContinuar.addEventListener("click", () => {
+        if (perfilSelecionado) window.location.href = perfilSelecionado;
+      });
+    </script>
+<script src="/assets/scripts/acessibilidade.js"></script>
+</div><script src="/assets/scripts/nav-mobile.js"></script></body>
+</html>

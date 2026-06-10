@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cadastro – ReabilitaCare</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&amp;family=Nunito:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="/assets/styles/registro.css" rel="stylesheet"/>
+<link href="/assets/styles/nav-mobile.css" rel="stylesheet"/></head>
+<body>
+<!-- HEADER -->
+<header>
+<section class="top-header">
+<div class="interface">
+<div class="logotipo">
+<a href="index.html">
+<img alt="Logo ReabilitaCare" src="/assets/images/logosemfundo.png"/>
+</a>
+</div>
+<div style="display: flex; align-items: center; gap: 15px">
+<div class="btn-social">
+<a href="https://www.instagram.com/reabilitaacare/" target="_blank"><i class="bi bi-instagram"></i></a>
+<a href="https://wa.me/5521981785065?text=Ol%C3%A1" target="_blank"><i class="bi bi-whatsapp"></i></a>
+<a href="#"><i class="bi bi-facebook"></i></a>
+</div>
+</div>
+</div>
+</section>
+<section class="bottom-header">
+<div class="interface">
+<button aria-expanded="false" aria-label="Abrir menu" class="nav-toggle">
+<div class="bars">
+<span class="bar"></span>
+<span class="bar"></span>
+<span class="bar"></span>
+</div>
+</button><nav>
+<ul>
+<li><a href="index.html">Início</a></li>
+<li><a href="sobre.html">Sobre</a></li>
+<li><a href="agendamentos.html">Agendamentos</a></li>
+<li><a href="contato.html">Contato</a></li>
+</ul>
+</nav>
+</div>
+</section>
+</header>
+<!-- FORMULÁRIO CADASTRO -->
+<main class="registro-main">
+<div class="registro-card">
+<h2>Criar conta</h2>
+<p class="registro-sub">Preencha os dados abaixo para se cadastrar</p>
+<form id="formRegistro">
+<div class="form-row">
+<div class="campo-grupo">
+<label for="nome">Nome Completo</label>
+<input id="nome" name="nome" placeholder="Seu nome completo" required="" type="text"/>
+</div>
+<div class="campo-grupo">
+<label for="email">E-mail</label>
+<input id="email" name="email" placeholder="seu@email.com" required="" type="email"/>
+</div>
+</div>
+<div class="form-row">
+<div class="campo-grupo">
+<label for="cpf">CPF</label>
+<input id="cpf" maxlength="14" name="cpf" placeholder="000.000.000-00" required="" type="text"/>
+</div>
+<div class="campo-grupo">
+<label for="telefone">Telefone</label>
+<input id="telefone" name="telefone" placeholder="(00) 00000-0000" required="" type="tel"/>
+</div>
+</div>
+<div class="form-row">
+<div class="campo-grupo">
+<label for="senha">Senha</label>
+<input id="senha" name="senha" placeholder="••••••••" required="" type="password"/>
+</div>
+<div class="campo-grupo">
+<label for="data_nascimento">Data de Nascimento</label>
+<input id="data_nascimento" name="data_nascimento" required="" type="date"/>
+</div>
+</div>
+<div class="campo-grupo">
+<label>Sexo</label>
+<div class="radio-group">
+<label class="radio-label"><input name="sexo" type="radio" value="masculino"/>
+                Masculino</label>
+<label class="radio-label"><input name="sexo" type="radio" value="feminino"/>
+                Feminino</label>
+<label class="radio-label"><input name="sexo" type="radio" value="outro"/> Outro</label>
+</div>
+</div>
+<div class="form-row">
+<div class="campo-grupo">
+<label for="cep">CEP</label>
+<input id="cep" maxlength="9" name="cep" placeholder="00000-000" required="" type="text"/>
+</div>
+<div class="campo-grupo">
+<label for="cidade">Cidade</label>
+<input id="cidade" name="cidade" placeholder="Sua cidade" required="" type="text"/>
+</div>
+<div class="campo-grupo">
+<label for="estado">Estado</label>
+<input id="estado" maxlength="2" name="estado" placeholder="UF" required="" type="text"/>
+</div>
+</div>
+<button type="submit">Criar Conta</button>
+<p class="login-link">
+            Já tem uma conta? <a href="login.html">Entrar</a>
+</p>
+</form>
+</div>
+</main>
+<script>
+      // Máscara CPF
+      document.getElementById("cpf").addEventListener("input", function () {
+        let v = this.value.replace(/\D/g, "").slice(0, 11);
+        v = v
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d)/, "$1.$2")
+          .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        this.value = v;
+      });
+
+      // Máscara CEP
+      document.getElementById("cep").addEventListener("input", function () {
+        let v = this.value.replace(/\D/g, "").slice(0, 8);
+        if (v.length > 5) v = v.slice(0, 5) + "-" + v.slice(5);
+        this.value = v;
+      });
+
+      document
+        .getElementById("formRegistro")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const btn = this.querySelector("button[type='submit']");
+          btn.textContent = "Cadastrando...";
+          btn.disabled = true;
+          setTimeout(() => {
+            alert("Cadastro realizado com sucesso!");
+            window.location.href = "login.html";
+          }, 1800);
+        });
+    </script>
+<script src="/assets/scripts/acessibilidade.js"></script>
+<script src="/assets/scripts/nav-mobile.js"></script></body>
+</html>

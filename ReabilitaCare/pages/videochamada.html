@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ReabilitaCare - Videochamada</title>
+<link href="/assets/styles/videochamada.css" rel="stylesheet"/>
+<link href="/assets/styles/nav-mobile.css" rel="stylesheet"/></head>
+<body>
+<header>
+      ReabilitaCare - Consulta Online
+      <div class="call-info">
+<span class="status">● Em chamada</span>
+<span id="timer">00:00</span>
+</div>
+</header>
+<div class="container">
+<div class="video-box">
+<p id="camStatus1">Câmera ligada</p>
+</div>
+<div class="video-box">
+<p id="camStatus2">Paciente</p>
+</div>
+</div>
+<footer>
+<button class="btn mute" id="muteBtn">Microfone</button>
+<button class="btn camera" id="camBtn">Câmera</button>
+<button class="btn end" id="endCall">Encerrar</button>
+</footer>
+<script>
+      let seconds = 0;
+      let interval;
+
+      let micOn = true;
+      let camOn = true;
+
+      function startTimer() {
+        interval = setInterval(() => {
+          seconds++;
+
+          let min = Math.floor(seconds / 60);
+          let sec = seconds % 60;
+
+          min = min < 10 ? "0" + min : min;
+          sec = sec < 10 ? "0" + sec : sec;
+
+          document.getElementById("timer").textContent = `${min}:${sec}`;
+        }, 1000);
+      }
+
+      function stopTimer() {
+        clearInterval(interval);
+      }
+
+      startTimer();
+
+      document.getElementById("endCall").addEventListener("click", () => {
+        stopTimer();
+
+        const status = document.querySelector(".status");
+        status.textContent = "● Encerrada";
+        status.style.color = "#ef4444";
+      });
+
+      document.getElementById("muteBtn").addEventListener("click", function () {
+        micOn = !micOn;
+
+        if (micOn) {
+          this.textContent = "Microfone";
+          this.style.background = "#22c55e";
+        } else {
+          this.textContent = "Mutado";
+          this.style.background = "#ef4444";
+        }
+      });
+
+      document.getElementById("camBtn").addEventListener("click", function () {
+        camOn = !camOn;
+
+        const camText = document.getElementById("camStatus1");
+
+        if (camOn) {
+          this.textContent = "Câmera";
+          this.style.background = "#3b82f6";
+          camText.textContent = "Câmera ligada";
+        } else {
+          this.textContent = "Desligada";
+          this.style.background = "#ef4444";
+          camText.textContent = "Câmera desligada";
+        }
+      });
+    </script>
+<script src="/assets/scripts/acessibilidade.js"></script>
+<script src="/assets/scripts/nav-mobile.js"></script></body>
+</html>

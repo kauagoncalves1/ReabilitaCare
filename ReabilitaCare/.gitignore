@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+__MACOSX/
+._*
+.AppleDouble
+.LSOverride
+
+# VS Code
+.vscode/
+
+# IDEs
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+Thumbs.db
+ehthumbs.db
+Desktop.ini
